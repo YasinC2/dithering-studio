@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="images/dither-tool.svg" type="image/svg+xml">
+        <title>Dithering Studio</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <header class="header">
+                <h1>Dithering Studio</h1>
+                <button id="save-btn" class="save-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                    </svg>
+                    Save Image
+                </button>
+            </header>
+
+            <div class="main-content">
+                <!-- Control Panel -->
+                <aside class="control-panel">
+                    <div class="panel-section">
+                        <h3>📁 Upload Image</h3>
+                        <div class="upload-area" id="image-upload">
+                            <svg width="48" height="48" viewBox="0 0 24 24">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                            </svg>
+                            <p>Drag & drop or click to upload</p>
+                            <input type="file" id="image-input" accept="image/*" hidden>
+                        </div>
+                    </div>
+
+                    <div class="panel-section">
+                        <h3>⚙️ Main Settings</h3>
+
+                        <div class="control-group">
+                            <label for="mode">Color Mode:</label>
+                            <select id="mode">
+                                <option value="bw">Black & White</option>
+                                <option value="rgb">Color (RGB)</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="brightness">Brightness: <span id="brightness-value">0</span></label>
+                            <input type="range" id="brightness" min="-100" max="100" value="0" step="1">
+                        </div>
+
+                        <div class="control-group">
+                            <label for="contrast">Contrast: <span id="contrast-value">0</span></label>
+                            <input type="range" id="contrast" min="-100" max="100" value="0" step="1">
+                        </div>
+
+                        <div class="control-group">
+                            <label for="steps">Steps: <span id="steps-value">2.3</span></label>
+                            <input type="range" id="steps" min="2" max="10" value="2" step="0.1">
+                        </div>
+
+                        <div class="control-group">
+                            <label for="pixel-size">Pixel Size: <span id="pixel-value">5</span></label>
+                            <input type="range" id="pixel-size" min="1" max="20" value="2" step="1">
+                        </div>
+                    </div>
+
+                    <div class="panel-section">
+                        <h3>🎨 Dithering Pattern</h3>
+
+                        <div class="upload-area small" id="pattern-upload">
+                            <svg width="32" height="32" viewBox="0 0 24 24">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                            </svg>
+                            <p>Upload Custom Pattern</p>
+                            <input type="file" id="pattern-input" accept="image/png" hidden>
+                        </div>
+
+                        <div class="pattern-presets">
+                            <h4>Preset Patterns:</h4>
+                            <div class="pattern-grid" id="pattern-grid">
+                                <!-- Patterns will be added via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-section">
+                        <h3>📐 Output Quality</h3>
+                        <div class="control-group">
+                            <label for="output-quality">Quality:</label>
+                            <select id="output-quality">
+                                <option value="1">Low (1x)</option>
+                                <option value="2" selected>Medium (2x)</option>
+                                <option value="3">High (3x)</option>
+                                <option value="4">Ultra (4x)</option>
+                            </select>
+                        </div>
+                        <div class="quality-info">
+                            <p>Higher quality increases output file size</p>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Image Preview Area -->
+                <main class="preview-area">
+                    <div class="canvas-container" id="canvas-container">
+                        <canvas id="main-canvas"></canvas>
+                        <div class="empty-state" id="empty-state">
+                            <svg width="64" height="64" viewBox="0 0 24 24">
+                                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
+                            </svg>
+                            <p>Upload an image to get started</p>
+                        </div>
+                    </div>
+
+                    <div class="image-info" id="image-info">
+                        <span>Dimensions: <span id="image-dimensions">-</span></span>
+                        <span>Format: <span id="image-format">-</span></span>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <script src="js/dither-engine.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+
+</html>
