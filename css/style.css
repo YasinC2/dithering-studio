@@ -197,6 +197,41 @@ body {
     cursor: pointer;
 }
 
+/* Reset Button */
+.reset-group {
+    margin-top: 1rem;
+}
+
+.reset-btn {
+    width: 100%;
+    background: var(--surface-light);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.reset-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.reset-btn svg {
+    fill: currentColor;
+}
+
+.reset-btn:hover svg {
+    fill: white;
+}
+
 /* Preset Patterns */
 .pattern-grid {
     display: grid;

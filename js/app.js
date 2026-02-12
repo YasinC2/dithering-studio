@@ -129,6 +129,64 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSetting('outputQuality', parseInt(e.target.value));
     });
 
+    // Reset button functionality
+    const resetBtn = document.getElementById('reset-settings-btn');
+
+    // Default values
+    const defaultSettings = {
+        mode: 'bw',
+        brightness: 0,
+        contrast: 0,
+        steps: 2,
+        pixelSize: 2,
+        outputQuality: 2
+    };
+
+    resetBtn.addEventListener('click', () => {
+        // Reset mode select
+        modeSelect.value = defaultSettings.mode;
+
+        // Reset brightness
+        brightnessSlider.value = defaultSettings.brightness;
+        brightnessValue.textContent = defaultSettings.brightness;
+
+        // Reset contrast
+        contrastSlider.value = defaultSettings.contrast;
+        contrastValue.textContent = defaultSettings.contrast;
+
+        // Reset steps
+        stepsSlider.value = defaultSettings.steps;
+        stepsValue.textContent = defaultSettings.steps;
+
+        // Reset pixel size
+        pixelSlider.value = defaultSettings.pixelSize;
+        pixelValue.textContent = defaultSettings.pixelSize;
+
+        // Reset quality
+        qualitySelect.value = defaultSettings.outputQuality;
+
+        // Apply all settings to engine
+        engine.updateSettings({
+            mode: defaultSettings.mode,
+            brightness: defaultSettings.brightness,
+            contrast: defaultSettings.contrast,
+            steps: defaultSettings.steps,
+            pixelSize: defaultSettings.pixelSize,
+            outputQuality: defaultSettings.outputQuality
+        });
+
+        // Optional: Show feedback to user
+        resetBtn.style.backgroundColor = 'var(--success)';
+        resetBtn.style.borderColor = 'var(--success)';
+        resetBtn.style.color = 'white';
+
+        setTimeout(() => {
+            resetBtn.style.backgroundColor = '';
+            resetBtn.style.borderColor = '';
+            resetBtn.style.color = '';
+        }, 300);
+    });
+
     // Save image
     saveBtn.addEventListener('click', () => {
         engine.saveImage();
@@ -159,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sampleImage.onerror = () => {
             console.log('Sample image could not be loaded');
         };
-        
+
         sampleImage.src = 'images/sample.jpg';
     });
 
