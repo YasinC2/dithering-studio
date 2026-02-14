@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dithering Studio</title>
+        <link rel="shortcut icon" href="images/dither-tool.svg" type="image/svg+xml">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <main class="container">
+            <header class="header">
+                <h1>Dithering Studio</h1>
+                <button id="downloadBtn" class="save-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"></path>
+                    </svg>
+                    Save Image
+                </button>
+            </header>
+
+            <!-- Main layout: Controls on left / Preview on right -->
+            <div class="workspace">
+                <!-- Control Panel (Left) -->
+                <div class="controls-panel">
+                    <!-- Image Upload (moved to panel) -->
+                    <div class="panel-section">
+                        <div class="control-section">
+                            <h3>📁 Upload Image</h3>
+                            <div class="dropzone" id="dropzone">
+                                <label for="fileInput" class="drop-label">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                                    </svg>
+                                    <span>Drag & drop or click to upload</span>
+                                    <span class="small">(max 10MB)</span>
+                                    <input type="file" id="fileInput" accept="image/*" hidden>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-section">
+                        <h3>⚙️ Main Settings</h3>
+                        <!-- Pixel Size -->
+                        <div class="control-row">
+                            <label>Pixel Size <span id="pixelSizeValue">4</span></label>
+                            <input type="range" id="pixelSize" min="1" max="20" value="4" step="1">
+                        </div>
+
+                        <!-- Steps (max 20) -->
+                        <div class="control-row">
+                            <label>Steps <span id="stepsValue">2</span></label>
+                            <input type="range" id="steps" min="2" max="20" value="2" step="1">
+                        </div>
+
+                        <!-- Color Mode -->
+                        <div class="control-row">
+                            <label>Mode</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="mode" value="BW" checked> BW</label>
+                                <label><input type="radio" name="mode" value="RGB"> RGB</label>
+                            </div>
+                        </div>
+
+                        <!-- Invert -->
+                        <div class="control-row">
+                            <label>Invert</label>
+                            <input type="checkbox" id="invert">
+                        </div>
+
+                        <!-- Brightness & Contrast (new) -->
+                        <div class="control-row">
+                            <label>Brightness <span id="brightnessValue">0</span></label>
+                            <input type="range" id="brightness" min="-100" max="100" value="0" step="1">
+                        </div>
+                        <div class="control-row">
+                            <label>Contrast <span id="contrastValue">100</span>%</label>
+                            <input type="range" id="contrast" min="0" max="200" value="100" step="1">
+                        </div>
+                    </div>
+
+                    <!-- Pattern Grid (5 columns) -->
+                    <div class="panel-section">
+                        <div class="control-row">
+                            <h3>🧩 Dither Pattern</h3>
+                            <div class="pattern-grid" id="patternGrid"></div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Pattern Upload (no reset button) -->
+                    <div class="panel-section">
+                        <div class="control-row">
+                            <h3>🎨 Custom Pattern</h3>
+                            <label class="dropzone">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                                </svg>
+                                <p>Upload Custom Pattern</p>
+                                <input type="file" id="patternUpload" accept="image/*">
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Output Scale -->
+                    <div class="control-row">
+                        <label>Output Scale</label>
+                        <select id="outputScale">
+                            <option value="1">1x (default)</option>
+                            <option value="2">2x</option>
+                            <option value="3">3x</option>
+                            <option value="4">4x</option>
+                        </select>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="button-group">
+                        <button id="resetBtn" class="btn secondary">↺ Reset Settings</button>
+                    </div>
+                </div>
+
+                <!-- Preview Area (Right - Large, CSS controlled) -->
+                <div class="preview-area">
+                    <canvas id="previewCanvas" class="preview-canvas"></canvas>
+                    <div class="stats" id="stats"></div>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="error hidden"></div>
+        </main>
+
+        <script type="module" src="js/script.js"></script>
+    </body>
+
+</html>

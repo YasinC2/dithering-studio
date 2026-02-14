@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="41.477119mm"
+   height="41.477112mm"
+   viewBox="0 0 41.477119 41.477112"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath7">
+      <rect
+         style="fill:#000000;stroke:none;stroke-width:0.899999;stroke-linejoin:round;paint-order:fill markers stroke"
+         id="rect7"
+         width="41.477116"
+         height="41.477116"
+         x="243.61243"
+         y="77.310196"
+         ry="7.0735412" />
+    </clipPath>
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-243.61243,-77.310195)">
+    <g
+       id="g5"
+       clip-path="url(#clipPath7)">
+      <rect
+         style="fill:#ffffff;stroke:none;stroke-width:0.9;stroke-linejoin:round;paint-order:fill markers stroke"
+         id="rect5"
+         width="41.477112"
+         height="41.477112"
+         x="243.61243"
+         y="77.310196" />
+      <rect
+         style="fill:#b3b3b3;stroke:none;stroke-width:0.899999;stroke-linejoin:round;paint-order:fill markers stroke"
+         id="rect1"
+         width="20.738558"
+         height="20.738558"
+         x="243.61243"
+         y="77.310196" />
+      <rect
+         style="fill:#666666;stroke:none;stroke-width:0.899999;stroke-linejoin:round;paint-order:fill markers stroke"
+         id="rect2"
+         width="20.738558"
+         height="20.738558"
+         x="264.35098"
+         y="77.310196" />
+      <rect
+         style="fill:#f2f2f2;stroke:none;stroke-width:0.899999;stroke-linejoin:round;paint-order:fill markers stroke"
+         id="rect3"
+         width="20.738558"
+         height="20.738558"
+         x="243.61243"
+         y="98.048752" />
+      <rect
+         style="fill:#1a1a1a;stroke:none;stroke-width:0.899999;stroke-linejoin:round;paint-order:fill markers stroke"
+         id="rect4"
+         width="20.738558"
+         height="20.738558"
+         x="264.35098"
+         y="98.048752" />
+    </g>
+  </g>
+</svg>

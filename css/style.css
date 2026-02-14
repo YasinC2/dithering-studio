@@ -1,0 +1,372 @@
+/* -------------------------------
+   Global & Dark Theme
+--------------------------------- */
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface-light: #334155;
+    --text: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border: #475569;
+    --success: #10b981;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+    user-select: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #2e3848;
+    border-radius: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #1a2333;
+    border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #171e2c;
+}
+
+body {
+    background: var(--bg);
+    color: #e6edf3;
+    display: flex;
+    justify-content: center;
+    padding: 0.7rem;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1600px;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.header h1 {
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, var(--primary), #a37dfa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.save-btn {
+    background: var(--success);
+    color: white;
+    border: none;
+    padding: 0.5rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.3s;
+}
+
+.save-btn:hover {
+    background: #0da271;
+}
+
+/* -------------------------------
+   Main Layout (Controls Left / Preview Right)
+--------------------------------- */
+.workspace {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 1rem;
+}
+
+/* Control Panel */
+.panel-section {
+    margin-bottom: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.panel-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.controls-panel {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 1.5rem;
+    max-height: 95vh;
+    overflow: auto;
+}
+
+/* Control Row */
+.control-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 15px;
+}
+
+.control-row label {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #bdc5d6;
+}
+
+/* Sliders */
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--primary);
+    background: #2d313e;
+    height: 6px;
+    border-radius: 10px;
+}
+
+/* Radio Buttons */
+.radio-group {
+    display: flex;
+    gap: 1.8rem;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: normal;
+    color: #d3dae8;
+}
+
+/* Dropzone */
+.dropzone {
+    background: var(--bg);
+    border: 2px dashed #5f6a7e;
+    border-radius: 12px;
+    padding: 1.5rem 0.5rem;
+    text-align: center;
+    transition: 0.2s;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.dropzone:hover {
+    border-color: #a78bfa;
+    background: #2f3543;
+}
+
+.dropzone [type="file"] {
+    display: block;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+}
+
+.drop-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+}
+
+.drop-label .icon {
+    font-size: 2rem;
+}
+
+.drop-label .small {
+    font-size: 0.8rem;
+    color: #9aa1b5;
+}
+
+/* Pattern Grid - 5 columns */
+.pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.6rem;
+    margin-top: 0.3rem;
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 0.2rem;
+}
+
+.pattern-item {
+    border: 2px solid var(--border);
+    aspect-ratio: 1;
+    border-radius: 6px;
+    background: #2b303e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: border-color 0.3s;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.pattern-item:hover {
+    border-color: var(--primary);
+}
+
+.pattern-item.selected {
+    border-color: var(--primary);
+    background: #2e3442;
+}
+
+.pattern-preview {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    background: #0e1015;
+}
+
+.pattern-name {
+    font-size: 0.7rem;
+    margin-top: 0.2rem;
+    color: #ccd3e0;
+    text-align: center;
+    word-break: break-word;
+    display: none;
+}
+
+/* Select & File Input */
+select,
+input[type="file"] {
+    background: #2d313e;
+    color: white;
+    border: 1px solid #555d70;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+/* Buttons */
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.8rem;
+}
+
+.btn {
+    flex: 1;
+    padding: 0.85rem 0.5rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.btn.primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn.primary:hover {
+    background: #a07cf0;
+}
+
+.btn.secondary {
+    background: #333947;
+    color: #eceff8;
+}
+
+.btn.secondary:hover {
+    background: #40475a;
+}
+
+/* -------------------------------
+   Preview Area - CSS controlled size only!
+   Canvas dimensions are NOT changed programmatically
+--------------------------------- */
+.preview-area {
+    background: var(--surface);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    padding: 1.5rem;
+}
+
+.preview-canvas {
+    width: 100%;
+    max-width: 700px;
+    /* Large, CSS-only sizing */
+    height: auto;
+    /* border-radius: 12px; */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+
+    /* CRITICAL: Preserve pixel perfect rendering */
+    image-rendering: crisp-edges;
+    /* Fallback */
+    image-rendering: pixelated;
+    /* Modern browsers */
+
+    /* Do NOT set width/height attributes in JS, only CSS */
+    display: block;
+    background: #090b0f;
+}
+
+.stats {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #b3bac9;
+    align-self: flex-start;
+    width: 100%;
+    padding: 0.2rem 0.5rem;
+}
+
+/* Error Message */
+.error {
+    background: #631c1c;
+    color: #ffd6d6;
+    padding: 0.9rem 1.5rem;
+    border-radius: 12px;
+    margin-top: 1.5rem;
+    border-left: 8px solid #f56565;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+    .workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-canvas {
+        max-width: 100%;
+    }
+}
