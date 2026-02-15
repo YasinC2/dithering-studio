@@ -157,6 +157,11 @@ label {
     color: transparent;
 }
 
+.header .header-buttons {
+    display: flex;
+    gap: 0.4rem;
+}
+
 .save-btn {
     background: var(--success);
     color: white;
@@ -173,6 +178,26 @@ label {
 
 .save-btn:hover {
     background: #0da271;
+}
+
+.square-btn {
+    background: var(--surface-light);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.square-btn:hover {
+    background: var(--surface);
 }
 
 /* -------------------------------
