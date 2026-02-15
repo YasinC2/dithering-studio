@@ -11,6 +11,21 @@
     --text-secondary: #94a3b8;
     --border: #475569;
     --success: #10b981;
+    --icon-size: 16px;
+    /* --radius-2xs: 0px;
+    --radius-xs: 4px;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 10px;
+    --radius-xl: 12px;
+    --radius-round: 100%; */
+    --radius-2xs: 0px;
+    --radius-xs: 0px;
+    --radius-sm: 0px;
+    --radius-md: 0px;
+    --radius-lg: 0px;
+    --radius-xl: 0px;
+    --radius-round: 0px;
 }
 
 * {
@@ -24,24 +39,87 @@
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
     background: #2e3848;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: #1a2333;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #171e2c;
+}
+
+/*********** Baseline, reset styles ***********/
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 25rem;
+}
+
+/* Removes default focus */
+input[type="range"]:focus {
+    outline: none;
+}
+
+/******** Chrome, Safari, Opera and Edge Chromium styles ********/
+/* slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+    background-color: #2e3848;
+    border-radius: 0rem;
+    height: 0.4rem;
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
+    appearance: none;
+    margin-top: -0.2rem;
+    /* Centers thumb on the track */
+    background-color: var(--primary);
+    border-radius: 0rem;
+    height: 0.8rem;
+    width: 0.8rem;
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {
+    outline: 1px solid var(--primary);
+    outline-offset: 0.125rem;
+}
+
+/*********** Firefox styles ***********/
+/* slider track */
+input[type="range"]::-moz-range-track {
+    background-color: green;
+    border-radius: 0rem;
+    height: 0.5rem;
+}
+
+/* slider thumb */
+input[type="range"]::-moz-range-thumb {
+    background-color: var(--primary);
+    border: none;
+    /*Removes extra border that FF applies*/
+    border-radius: 0rem;
+    height: 1rem;
+    width: 1rem;
+}
+
+input[type="range"]:focus::-moz-range-thumb {
+    outline: 3px solid var(--primary);
+    outline-offset: 0.125rem;
 }
 
 body {
@@ -51,6 +129,10 @@ body {
     justify-content: center;
     padding: 0.7rem;
     line-height: 1.6;
+}
+
+label {
+    display: block;
 }
 
 .container {
@@ -80,7 +162,7 @@ body {
     color: white;
     border: none;
     padding: 0.5rem 0.6rem;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-size: 0.8rem;
     cursor: pointer;
     display: flex;
@@ -120,9 +202,9 @@ body {
 
 .controls-panel {
     background: var(--surface);
-    border-radius: 12px;
-    padding: 1.5rem;
-    max-height: 95vh;
+    border-radius: var(--radius-xl);
+    padding: 1rem;
+    max-height: calc(100vh - 95px);
     overflow: auto;
 }
 
@@ -146,7 +228,7 @@ input[type="range"] {
     accent-color: var(--primary);
     background: #2d313e;
     height: 6px;
-    border-radius: 10px;
+    border-radius: var(--radius-xs);
 }
 
 /* Radio Buttons */
@@ -163,17 +245,30 @@ input[type="range"] {
     color: #d3dae8;
 }
 
+/* Radio Buttons */
+.checkbox-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.checkbox-group label {
+    font-weight: normal;
+    color: #d3dae8;
+    line-height: 1;
+}
+
 /* Dropzone */
 .dropzone {
     background: var(--bg);
     border: 2px dashed #5f6a7e;
-    border-radius: 12px;
-    padding: 1.5rem 0.5rem;
+    border-radius: var(--radius-lg);
+    padding: 1rem 0.5rem;
     text-align: center;
     transition: 0.2s;
     cursor: pointer;
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     position: relative;
 }
 
@@ -211,16 +306,16 @@ input[type="range"] {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 0.6rem;
-    margin-top: 0.3rem;
-    max-height: 260px;
-    overflow-y: auto;
-    padding: 0.2rem;
+    /* margin-top: 0.3rem; */
+    /* max-height: 260px; */
+    /* overflow-y: auto; */
+    /* padding: 0.2rem; */
 }
 
 .pattern-item {
     border: 2px solid var(--border);
     aspect-ratio: 1;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     background: #2b303e;
     display: flex;
     flex-direction: column;
@@ -264,7 +359,7 @@ input[type="file"] {
     color: white;
     border: 1px solid #555d70;
     padding: 0.6rem 0.8rem;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-size: 0.9rem;
 }
 
@@ -279,11 +374,16 @@ input[type="file"] {
     flex: 1;
     padding: 0.85rem 0.5rem;
     border: none;
-    border-radius: 10px;
+    border-radius: var(--radius-lg);
     font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
     transition: 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    line-height: 1;
 }
 
 .btn.primary {
@@ -310,21 +410,23 @@ input[type="file"] {
 --------------------------------- */
 .preview-area {
     background: var(--surface);
-    border-radius: 20px;
+    border-radius: var(--radius-xl);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    padding: 1.5rem;
+    padding: 1rem;
 }
 
 .preview-canvas {
     width: 100%;
-    max-width: 700px;
+    max-height: calc(100vh - 95px);
+    object-fit: contain;
+    /* max-width: 700px; */
     /* Large, CSS-only sizing */
     height: auto;
-    /* border-radius: 12px; */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+    /* border-radius: var(--radius-xl); */
+    /* box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7); */
 
     /* CRITICAL: Preserve pixel perfect rendering */
     image-rendering: crisp-edges;
@@ -334,7 +436,7 @@ input[type="file"] {
 
     /* Do NOT set width/height attributes in JS, only CSS */
     display: block;
-    background: #090b0f;
+    /* background: #090b0f; */
 }
 
 .stats {
@@ -351,7 +453,7 @@ input[type="file"] {
     background: #631c1c;
     color: #ffd6d6;
     padding: 0.9rem 1.5rem;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     margin-top: 1.5rem;
     border-left: 8px solid #f56565;
 }
@@ -369,4 +471,210 @@ input[type="file"] {
     .preview-canvas {
         max-width: 100%;
     }
+}
+
+/* Pattern Editor Styles */
+.pattern-editor-details {
+    margin-top: 1rem;
+    border: 1px solid #3a4052;
+    border-radius: var(--radius-md);
+    /* padding: 0 0.5rem; */
+    margin-bottom: 15px;
+}
+
+.pattern-editor-details summary {
+    cursor: pointer;
+    color: #bdc5d6;
+    font-weight: 600;
+    padding: 0.5rem;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.pattern-editor-details summary:hover {
+    color: #8b5cf6;
+}
+
+.pattern-editor {
+    padding: 1rem 0.5rem;
+}
+
+.editor-controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.editor-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.editor-input-group label {
+    font-size: 0.8rem;
+    color: #9aa1b5;
+}
+
+.editor-input-group input,
+#editor-layer-number {
+    background: #2d313e;
+    color: white;
+    border: 1px solid #555d70;
+    padding: 0.3rem 0.5rem;
+    border-radius: var(--radius-xs);
+}
+
+.editor-layer-control {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.editor-layer-control .range {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.editor-layer-control .range input[type="range"] {
+    flex: 3;
+}
+
+.editor-layer-control .range input[type="number"] {
+    flex: 1;
+    min-width: 60px;
+}
+
+.pattern-preview-section {
+    margin: 1rem 0;
+    text-align: center;
+}
+
+.pattern-preview-section label {
+    display: block;
+    font-size: 0.9rem;
+    color: #bdc5d6;
+    margin-bottom: 0.5rem;
+}
+
+.pattern-preview-canvas {
+    width: 64px;
+    height: 64px;
+    border: 2px solid #3a4052;
+    border-radius: var(--radius-xs);
+    background: #0e1015;
+    margin: 0 auto;
+}
+
+.pattern-grid-container {
+    margin: 1rem 0;
+    overflow-x: auto;
+    text-align: center;
+}
+
+.pattern-grid-canvas {
+    display: inline-block;
+    border: 1px solid #3a4052;
+    cursor: crosshair;
+    max-width: 100%;
+}
+
+.editor-buttons {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+    flex-direction: column;
+}
+
+.editor-buttons .btn.small {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    background: #2d313e;
+    color: #e6edf3;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    flex: 1;
+}
+
+.editor-buttons .btn.small:hover {
+    background: #3a4052;
+}
+
+.editor-buttons .btn.small.primary {
+    background: #8b5cf6;
+    color: white;
+}
+
+.editor-buttons .btn.small.primary:hover {
+    background: #a07cf0;
+}
+
+.editor-buttons .btn.small.warning {
+    background: #7f1d1d;
+    color: #fecaca;
+    border: 1px solid #ef4444;
+}
+
+.editor-buttons .btn.small.warning:hover {
+    background: #991b1b;
+    color: white;
+}
+
+/* Delete icon for custom patterns */
+.pattern-item {
+    position: relative;
+}
+
+.pattern-item.custom .delete-pattern {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 16px;
+    height: 16px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #ff6b6b;
+    border-radius: var(--radius-round);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+    border: 1px solid #ff6b6b;
+}
+
+.pattern-item.custom:hover .delete-pattern {
+    opacity: 1;
+}
+
+.pattern-item.custom .delete-pattern:hover {
+    background: #ff6b6b;
+    color: white;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    stroke: currentColor;
+    fill: none;
+}
+
+h3 .icon,
+summary .icon {
+    --icon-size: 22px;
 }

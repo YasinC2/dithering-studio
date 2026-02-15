@@ -1,8 +1,4 @@
-// =============================================
-//  Pixel Dither – Final Version
-//  Pattern-based image dithering tool
-//  Language: English | Canvas: CSS-only scaling
-// =============================================
+import { PatternEditor, initPatternEditor } from './pattern-editor.js';
 
 /* -------------------------------
    DEFAULT STATE & CONSTANTS
@@ -21,25 +17,31 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 // Preset patterns (matching your file list)
 const PRESET_PATTERNS = [
-    { name: "Pattern 1", url: "patterns/dither-pattern-1.png", preview: "patterns/dither-pattern-1-preview.png" },
-    { name: "Pattern 4", url: "patterns/dither-pattern-4.png", preview: "patterns/dither-pattern-4-preview.png" },
-    { name: "Pattern 7", url: "patterns/dither-pattern-7.png", preview: "patterns/dither-pattern-7-preview.png" },
-    { name: "Pattern 3", url: "patterns/dither-pattern-3.png", preview: "patterns/dither-pattern-3-preview.png" },
-    { name: "Pattern 2", url: "patterns/dither-pattern-2.png", preview: "patterns/dither-pattern-2-preview.png" },
-    { name: "Pattern 5", url: "patterns/dither-pattern-5.png", preview: "patterns/dither-pattern-5-preview.png" },
-    { name: "Pattern 16", url: "patterns/dither-pattern-16.png", preview: "patterns/dither-pattern-16-preview.png" },
-    { name: "Pattern 6", url: "patterns/dither-pattern-6.png", preview: "patterns/dither-pattern-6-preview.png" },
-    { name: "Pattern 8", url: "patterns/dither-pattern-8.png", preview: "patterns/dither-pattern-8-preview.png" },
-    { name: "Pattern 9", url: "patterns/dither-pattern-9.png", preview: "patterns/dither-pattern-9-preview.png" },
-    { name: "Pattern 10", url: "patterns/dither-pattern-10.png", preview: "patterns/dither-pattern-10-preview.png" },
-    { name: "Pattern 15", url: "patterns/dither-pattern-15.png", preview: "patterns/dither-pattern-15-preview.png" },
-    { name: "Pattern 11", url: "patterns/dither-pattern-11.png", preview: "patterns/dither-pattern-11-preview.png" },
-    { name: "Pattern 12", url: "patterns/dither-pattern-12.png", preview: "patterns/dither-pattern-12-preview.png" },
-    { name: "Pattern 13", url: "patterns/dither-pattern-13.png", preview: "patterns/dither-pattern-13-preview.png" },
-    { name: "Pattern 14", url: "patterns/dither-pattern-14.png", preview: "patterns/dither-pattern-14-preview.png" },
-    { name: "Pattern 17", url: "patterns/dither-pattern-17.png", preview: "patterns/dither-pattern-17-preview.png" },
-    { name: "Pattern 18", url: "patterns/dither-pattern-18.png", preview: "patterns/dither-pattern-18-preview.png" },
-    { name: "Pattern 19", url: "patterns/dither-pattern-19.png", preview: "patterns/dither-pattern-19-preview.png" }
+    { name: "Pattern 1", url: "patterns/dither-pattern-1.png" },
+    { name: "Pattern 4", url: "patterns/dither-pattern-4.png" },
+    { name: "Pattern 7", url: "patterns/dither-pattern-7.png" },
+    // { name: "Pattern 3", url: "patterns/dither-pattern-3.png" },
+    { name: "Pattern 2", url: "patterns/dither-pattern-2.png" },
+    { name: "Pattern 5", url: "patterns/dither-pattern-5.png" },
+    { name: "Pattern 16", url: "patterns/dither-pattern-16.png" },
+    { name: "Pattern 6", url: "patterns/dither-pattern-6.png" },
+    { name: "Pattern 8", url: "patterns/dither-pattern-8.png" },
+    { name: "Pattern 9", url: "patterns/dither-pattern-9.png" },
+    { name: "Pattern 10", url: "patterns/dither-pattern-10.png" },
+    { name: "Pattern 15", url: "patterns/dither-pattern-15.png" },
+    { name: "Pattern 11", url: "patterns/dither-pattern-11.png" },
+    { name: "Pattern 12", url: "patterns/dither-pattern-12.png" },
+    { name: "Pattern 13", url: "patterns/dither-pattern-13.png" },
+    { name: "Pattern 14", url: "patterns/dither-pattern-14.png" },
+    { name: "Pattern 17", url: "patterns/dither-pattern-17.png" },
+    { name: "Pattern 18", url: "patterns/dither-pattern-18.png" },
+    { name: "Pattern 19", url: "patterns/dither-pattern-19.png" },
+    { name: "Pattern 25", url: "patterns/dither-pattern-25.png" },
+    { name: "Pattern 20", url: "patterns/dither-pattern-20.png" },
+    { name: "Pattern 21", url: "patterns/dither-pattern-21.png" },
+    { name: "Pattern 22", url: "patterns/dither-pattern-22.png" },
+    { name: "Pattern 23", url: "patterns/dither-pattern-23.png" },
+    { name: "Pattern 24", url: "patterns/dither-pattern-24.png" },
 ];
 
 /* -------------------------------
@@ -59,6 +61,8 @@ const state = {
     currentPatternUrl: null,  // For filename generation
     isCustomPattern: false    // Is custom pattern active?
 };
+
+let patternEditor = null;
 
 /* -------------------------------
    DOM ELEMENTS
@@ -220,7 +224,7 @@ async function buildPatternGrid() {
 
         const img = document.createElement('img');
         img.className = 'pattern-preview';
-        img.src = pattern.preview;
+        img.src = pattern.url;
         img.alt = pattern.name;
         img.loading = 'lazy';
 
@@ -238,6 +242,45 @@ async function buildPatternGrid() {
 
             try {
                 const imgData = await loadPatternFromUrl(pattern.url);
+
+                // ===== بخش جدید: لود در ادیتور =====
+                if (window.patternEditor) {
+                    // تبدیل ImageData به threshold map
+                    const w = imgData.width;
+                    const h = imgData.height;
+                    const thresholdMap = Array(h).fill().map(() => Array(w).fill(0));
+
+                    // استخراج مقادیر خاکستری از ImageData
+                    for (let y = 0; y < h; y++) {
+                        for (let x = 0; x < w; x++) {
+                            const idx = (y * w + x) * 4;
+                            thresholdMap[y][x] = imgData.data[idx]; // مقدار قرمز = خاکستری
+                        }
+                    }
+
+                    // تشخیص تعداد لایه‌ها (براساس بیشترین مقدار threshold)
+                    const uniqueValues = new Set(thresholdMap.flat());
+                    const layers = Math.min(32, uniqueValues.size);
+
+                    // اطمینان از حداقل 2 لایه
+                    const finalLayers = Math.max(2, layers);
+
+                    window.patternEditor.loadPatternFromThresholdMap(thresholdMap, w, h, finalLayers);
+
+                    // ===== آپدیت اینپوت‌ها =====
+                    document.getElementById('editor-width').value = w;
+                    document.getElementById('editor-height').value = h;
+                    document.getElementById('editor-layers').value = layers;
+
+                    // آپدیت محدوده اسلایدر لایه
+                    window.patternEditor.layerRangeInput.max = layers - 1;
+                    window.patternEditor.layerNumberInput.max = layers - 1;
+                    window.patternEditor.layerRangeInput.value = 0;
+                    window.patternEditor.layerNumberInput.value = 0;
+                    // =========================
+                }
+                // ===================================
+
                 state.patternImageData = imgData;
                 state.patternWidth = imgData.width;
                 state.patternHeight = imgData.height;
@@ -251,6 +294,143 @@ async function buildPatternGrid() {
         });
 
         grid.appendChild(item);
+    }
+
+    // بعد پترن‌های ذخیره‌شده در localStorage
+    const saved = localStorage.getItem('custom-dither-patterns');
+    if (saved) {
+        const customPatterns = JSON.parse(saved);
+
+        customPatterns.forEach((pattern, index) => {
+            const item = document.createElement('div');
+            item.className = 'pattern-item custom';
+            item.dataset.customId = pattern.id;
+
+            // تصویر پیش‌نمایش
+            const img = document.createElement('img');
+            img.className = 'pattern-preview';
+            img.src = pattern.thumbnail;
+            img.alt = pattern.name;
+
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'pattern-name';
+            nameSpan.textContent = pattern.name;
+
+            // آیکون حذف
+            const deleteIcon = document.createElement('span');
+            deleteIcon.className = 'delete-pattern';
+            deleteIcon.innerHTML = '×';
+            deleteIcon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (confirm(`Delete "${pattern.name}"?`)) {
+                    // حذف از localStorage
+                    const saved = localStorage.getItem('custom-dither-patterns');
+                    const patterns = saved ? JSON.parse(saved) : [];
+                    const newPatterns = patterns.filter(p => p.id !== pattern.id);
+                    localStorage.setItem('custom-dither-patterns', JSON.stringify(newPatterns));
+
+                    // بازسازی گرید
+                    buildPatternGrid();
+                }
+            });
+
+            item.appendChild(img);
+            item.appendChild(nameSpan);
+            item.appendChild(deleteIcon);
+
+            item.addEventListener('click', async () => {
+                // حذف selected از بقیه
+                document.querySelectorAll('.pattern-item').forEach(el => el.classList.remove('selected'));
+                item.classList.add('selected');
+
+                // لود پترن ذخیره‌شده در ادیتور
+                // بازسازی پیکسل‌ها از داده ذخیره‌شده
+                if (window.patternEditor) {
+                    const pixels = pattern.data.map(layer =>
+                        layer.map(row =>
+                            row.map(cell => cell === 1)
+                        )
+                    );
+
+                    // تنظیم ادیتور
+                    window.patternEditor.options.width = pattern.width;
+                    window.patternEditor.options.height = pattern.height;
+                    window.patternEditor.options.layers = pattern.layers;
+                    window.patternEditor.pixels = pixels;
+                    window.patternEditor.options.currentLayer = 0;
+
+                    // آپدیت کنترل‌ها
+                    document.getElementById('editor-width').value = pattern.width;
+                    document.getElementById('editor-height').value = pattern.height;
+                    document.getElementById('editor-layers').value = pattern.layers;
+
+                    window.patternEditor.layerRangeInput.max = pattern.layers - 1;
+                    window.patternEditor.layerNumberInput.max = pattern.layers - 1;
+                    window.patternEditor.layerRangeInput.value = 0;
+                    window.patternEditor.layerNumberInput.value = 0;
+
+                    window.patternEditor.render();
+                    // window.patternEditor.triggerChange();
+
+                    // ساخت threshold map مستقیماً از pixels
+                    const { width, height, layers } = window.patternEditor.options;
+                    const step = 255 / layers;
+                    const thresholdMap = Array(height).fill().map(() => Array(width).fill(0));
+
+                    for (let y = 0; y < height; y++) {
+                        for (let x = 0; x < width; x++) {
+                            let maxLayer = -1;
+                            for (let l = 0; l < layers; l++) {
+                                if (pixels[l][y][x]) maxLayer = l;
+                            }
+                            if (maxLayer >= 0) {
+                                thresholdMap[y][x] = Math.min(255, Math.floor((maxLayer + 1) * step));
+                            }
+                        }
+                    }
+
+                    // ساخت ImageData از thresholdMap
+                    const canvas = document.createElement('canvas');
+                    canvas.width = pattern.width;
+                    canvas.height = pattern.height;
+                    const ctx = canvas.getContext('2d');
+
+                    for (let y = 0; y < pattern.height; y++) {
+                        for (let x = 0; x < pattern.width; x++) {
+                            const val = thresholdMap[y][x];
+                            ctx.fillStyle = `rgb(${val}, ${val}, ${val})`;
+                            ctx.fillRect(x, y, 1, 1);
+                        }
+                    }
+
+                    const imgData = ctx.getImageData(0, 0, pattern.width, pattern.height);
+
+                    // تبدیل به grayscale
+                    const grayData = new Uint8ClampedArray(pattern.width * pattern.height * 4);
+                    for (let i = 0; i < pattern.width * pattern.height; i++) {
+                        const r = imgData.data[i * 4];
+                        const g = imgData.data[i * 4 + 1];
+                        const b = imgData.data[i * 4 + 2];
+                        const gray = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
+                        grayData[i * 4] = grayData[i * 4 + 1] = grayData[i * 4 + 2] = gray;
+                        grayData[i * 4 + 3] = 255;
+                    }
+
+                    state.patternImageData = new ImageData(grayData, pattern.width, pattern.height);
+                    state.patternWidth = pattern.width;
+                    state.patternHeight = pattern.height;
+                    state.isCustomPattern = true;
+                    state.currentPatternUrl = null;
+
+                    processImage();
+                }
+
+                // همچنین می‌توانیم برای دایترینگ استفاده کنیم
+                // ...
+            });
+
+            grid.appendChild(item);
+        });
     }
 
     // Select first pattern by default
@@ -510,8 +690,7 @@ function bindEvents() {
     const dropzone = elements.dropzone;
     const fileInput = elements.fileInput;
 
-    dropzone.addEventListener('click', () => fileInput.click());
-
+    // dropzone.addEventListener('click', () => fileInput.click());
     // dropzone.addEventListener('dragover', (e) => {
     //     e.preventDefault();
     //     dropzone.classList.add('drag-over');
@@ -588,8 +767,58 @@ function bindEvents() {
     // Custom pattern upload
     elements.patternUpload.addEventListener('change', async (e) => {
         if (e.target.files.length) {
+            const confirmed = await validatePatternImage(e.target.files[0]);
+            if (!confirmed) {
+                elements.patternUpload.value = '';
+                return;
+            }
+
             try {
+                // ===== بررسی اندازه تصویر =====
+                const img = new Image();
+                img.src = URL.createObjectURL(e.target.files[0]);
+                await new Promise((resolve) => { img.onload = resolve; });
+
+                if (img.width > 16 || img.height > 16) {
+                    if (!confirm(`Image size is ${img.width}×${img.height}, which is quite large for a dither pattern.\n\nDo you still want to use it as a pattern?`)) {
+                        elements.patternUpload.value = '';
+                        return;
+                    }
+                }
+                // ==============================
+
                 const imgData = await loadPatternFromFile(e.target.files[0]);
+
+                // ===== آپدیت ادیتور =====
+                if (window.patternEditor) {
+                    const w = imgData.width;
+                    const h = imgData.height;
+                    const thresholdMap = Array(h).fill().map(() => Array(w).fill(0));
+
+                    for (let y = 0; y < h; y++) {
+                        for (let x = 0; x < w; x++) {
+                            const idx = (y * w + x) * 4;
+                            thresholdMap[y][x] = imgData.data[idx];
+                        }
+                    }
+
+                    // تشخیص تعداد لایه‌ها
+                    const uniqueValues = new Set(thresholdMap.flat());
+                    const layers = Math.min(32, uniqueValues.size);
+
+                    window.patternEditor.loadPatternFromThresholdMap(thresholdMap, w, h, layers);
+
+                    document.getElementById('editor-width').value = w;
+                    document.getElementById('editor-height').value = h;
+                    document.getElementById('editor-layers').value = layers;
+
+                    window.patternEditor.layerRangeInput.max = layers - 1;
+                    window.patternEditor.layerNumberInput.max = layers - 1;
+                    window.patternEditor.layerRangeInput.value = 0;
+                    window.patternEditor.layerNumberInput.value = 0;
+                }
+                // ========================
+
                 state.patternImageData = imgData;
                 state.patternWidth = imgData.width;
                 state.patternHeight = imgData.height;
@@ -628,6 +857,75 @@ function bindEvents() {
     });
 }
 
+function setupPatternEditor() {
+    window.patternEditor = initPatternEditor((thresholdMap, width, height) => {
+        // اینجا thresholdMap رو باید تبدیل به ImageData کنیم
+        // و در state.patternImageData قرار دهیم
+
+        // ساخت ImageData از thresholdMap
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                const val = thresholdMap[y][x];
+                ctx.fillStyle = `rgb(${val}, ${val}, ${val})`;
+                ctx.fillRect(x, y, 1, 1);
+            }
+        }
+
+        const imgData = ctx.getImageData(0, 0, width, height);
+
+        // تبدیل به grayscale (همانطور که pattern loader انجام می‌دهد)
+        const grayData = new Uint8ClampedArray(width * height * 4);
+        for (let i = 0; i < width * height; i++) {
+            const r = imgData.data[i * 4];
+            const g = imgData.data[i * 4 + 1];
+            const b = imgData.data[i * 4 + 2];
+            const gray = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
+            grayData[i * 4] = grayData[i * 4 + 1] = grayData[i * 4 + 2] = gray;
+            grayData[i * 4 + 3] = 255;
+        }
+
+        state.patternImageData = new ImageData(grayData, width, height);
+        state.patternWidth = width;
+        state.patternHeight = height;
+        state.isCustomPattern = true;
+        state.currentPatternUrl = null;
+
+        // حذف کلاس selected از گرید
+        document.querySelectorAll('.pattern-item').forEach(el => el.classList.remove('selected'));
+
+        // اعمال دایترینگ
+        processImage();
+    });
+}
+
+async function validatePatternImage(file) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+            if (img.width > 16 || img.height > 16) {
+                const result = confirm(
+                    `⚠️ Pattern image size: ${img.width}×${img.height}\n\n` +
+                    `This is larger than recommended (max 16×16).\n` +
+                    `Large patterns may:\n` +
+                    `• Slow down processing\n` +
+                    `• Produce unexpected dithering results\n\n` +
+                    `Do you still want to use it as a pattern?`
+                );
+                resolve(result);
+            } else {
+                resolve(true);
+            }
+            URL.revokeObjectURL(img.src);
+        };
+        img.src = URL.createObjectURL(file);
+    });
+}
+
 /* -------------------------------
    INITIALIZATION
 --------------------------------- */
@@ -636,6 +934,14 @@ async function init() {
 
     // Build pattern grid and load first pattern
     await buildPatternGrid();
+    setupPatternEditor();
+
+    // ===== بخش جدید: گوش دادن به رویداد اضافه شدن پترن =====
+    window.addEventListener('pattern-added', () => {
+        // بازسازی گرید پترن‌ها
+        buildPatternGrid();
+    });
+    // ==========================================================
 
     // Display initial slider values
     elements.brightnessValue.textContent = DEFAULT.brightness;
