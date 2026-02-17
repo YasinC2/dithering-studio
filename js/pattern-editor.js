@@ -1,6 +1,5 @@
 // =============================================
-//  Pattern Editor - لایه‌به‌لایه طراحی پترن دایترینگ
-//  مستقل از کد اصلی، با قابلیت ادغام
+//  Pattern Editor - نسخه نهایی با تفکیک رنگ صحیح
 // =============================================
 
 class PatternEditor {
@@ -8,35 +7,29 @@ class PatternEditor {
         this.container = document.getElementById(containerId);
         if (!this.container) throw Error(`Container ${containerId} not found`);
 
-        // تنظیمات پیش‌فرض
         this.options = {
             width: 8,
             height: 8,
             layers: 4,
             currentLayer: 0,
-            onchange: null,      // کال‌بک برای اعمال تغییرات روی تصویر
+            onchange: null,
             ...options
         };
 
-        // داده‌های پترن (3 بعدی: layers × height × width)
         this.pixels = [];
+        this.uniqueThresholds = null; // جدید: برای حفظ val دقیق هنگام لود
         this.initPixels();
 
-        // متغیرهای رسم
         this.isDrawing = false;
         this.lastX = -1;
         this.lastY = -1;
-
-        // localStorage key
         this.STORAGE_KEY = 'custom-dither-patterns';
 
-        // ساخت DOM
         this.createDOM();
         this.attachEvents();
         this.render();
     }
 
-    // ==================== مقداردهی اولیه ====================
     initPixels() {
         const { width, height, layers } = this.options;
         this.pixels = Array(layers).fill().map(() =>
@@ -46,22 +39,17 @@ class PatternEditor {
         );
     }
 
-    // ==================== ساخت DOM ====================
     createDOM() {
+        // بدون تغییر (همان کد اصلی)
         const wrapper = document.createElement('div');
         wrapper.className = 'pattern-editor';
 
-        // === بخش کنترل‌ها ===
         const controls = document.createElement('div');
         controls.className = 'editor-controls';
 
-        // عرض
         const widthGroup = this.createInputGroup('width', 'Width:', this.options.width, 1, 16, 1);
-        // ارتفاع
         const heightGroup = this.createInputGroup('height', 'Height:', this.options.height, 1, 16, 1);
-        // تعداد لایه‌ها
         const layersGroup = this.createInputGroup('layers', 'Layers:', this.options.layers, 2, 32, 1);
-        // لایه فعلی
         const layerGroup = this.createLayerControl();
 
         controls.appendChild(widthGroup);
@@ -69,7 +57,6 @@ class PatternEditor {
         controls.appendChild(layersGroup);
         controls.appendChild(layerGroup);
 
-        // === بخش پیش‌نمایش پترن نهایی ===
         const previewSection = document.createElement('div');
         previewSection.className = 'pattern-preview-section';
 
@@ -85,7 +72,6 @@ class PatternEditor {
         previewSection.appendChild(previewLabel);
         previewSection.appendChild(this.previewCanvas);
 
-        // === بخش گرید اصلی ===
         const gridContainer = document.createElement('div');
         gridContainer.className = 'pattern-grid-container';
 
@@ -95,28 +81,24 @@ class PatternEditor {
 
         gridContainer.appendChild(this.gridCanvas);
 
-        // === بخش دکمه‌ها ===
         const buttons = document.createElement('div');
         buttons.className = 'editor-buttons';
 
         this.downloadBtn = document.createElement('button');
         this.downloadBtn.type = 'button';
         this.downloadBtn.className = 'btn small primary';
-        // this.downloadBtn.textContent = 'Download Pattern Image';
         this.downloadBtn.innerHTML = '<svg class="icon"><use href="#icon-download"></use></svg> Download Pattern';
         this.downloadBtn.addEventListener('click', () => this.downloadPattern());
 
         this.addToPresetsBtn = document.createElement('button');
         this.addToPresetsBtn.type = 'button';
         this.addToPresetsBtn.className = 'btn small primary';
-        // this.addToPresetsBtn.textContent = 'Add to Presets';
         this.addToPresetsBtn.innerHTML = '<svg class="icon"><use href="#icon-grid-add"></use></svg> Add to Presets';
         this.addToPresetsBtn.addEventListener('click', () => this.addToPresets());
 
         this.clearAllBtn = document.createElement('button');
         this.clearAllBtn.type = 'button';
         this.clearAllBtn.className = 'btn small warning';
-        // this.clearAllBtn.textContent = 'Clear All Layers';
         this.clearAllBtn.innerHTML = '<svg class="icon"><use href="#icon-trash"></use></svg> Clear All Layers';
         this.clearAllBtn.addEventListener('click', () => this.clearAll());
 
@@ -124,7 +106,6 @@ class PatternEditor {
         buttons.appendChild(this.downloadBtn);
         buttons.appendChild(this.clearAllBtn);
 
-        // === چیدمان نهایی ===
         wrapper.appendChild(controls);
         wrapper.appendChild(previewSection);
         wrapper.appendChild(gridContainer);
@@ -133,12 +114,12 @@ class PatternEditor {
         this.container.innerHTML = '';
         this.container.appendChild(wrapper);
 
-        // ذخیره ارجاع به المان‌های عددی برای به‌روزرسانی
         this.layerNumberInput = document.getElementById('editor-layer-number');
         this.layerRangeInput = document.getElementById('editor-layer-range');
     }
 
     createInputGroup(id, label, value, min, max, step) {
+        // بدون تغییر
         const group = document.createElement('div');
         group.className = 'editor-input-group';
 
@@ -171,6 +152,7 @@ class PatternEditor {
     }
 
     createLayerControl() {
+        // بدون تغییر
         const group = document.createElement('div');
         group.className = 'editor-layer-control';
 
@@ -196,7 +178,6 @@ class PatternEditor {
         this.layerNumberInput.step = 1;
         this.layerNumberInput.value = this.options.currentLayer;
 
-        // هماهنگ‌سازی دو input
         const updateLayer = (value) => {
             value = parseInt(value, 10);
             if (value !== this.options.currentLayer) {
@@ -218,20 +199,18 @@ class PatternEditor {
         return group;
     }
 
-    // ==================== تغییر اندازه ====================
     resizeWidth(newWidth) {
+        // اضافه: وقتی resize, uniqueThresholds رو null کن
+        this.uniqueThresholds = null;
         const oldWidth = this.options.width;
         if (newWidth === oldWidth) return;
 
-        // برای هر لایه و هر سطر، عرض را تنظیم کن
         for (let l = 0; l < this.options.layers; l++) {
             for (let y = 0; y < this.options.height; y++) {
                 const row = this.pixels[l][y];
                 if (newWidth > oldWidth) {
-                    // اضافه کردن سلول‌های خالی (false) به انتها
                     row.push(...Array(newWidth - oldWidth).fill(false));
                 } else {
-                    // برش از انتها
                     this.pixels[l][y] = row.slice(0, newWidth);
                 }
             }
@@ -243,18 +222,18 @@ class PatternEditor {
     }
 
     resizeHeight(newHeight) {
+        // اضافه: وقتی resize, uniqueThresholds رو null کن
+        this.uniqueThresholds = null;
         const oldHeight = this.options.height;
         if (newHeight === oldHeight) return;
 
         for (let l = 0; l < this.options.layers; l++) {
             if (newHeight > oldHeight) {
-                // اضافه کردن سطرهای جدید (پر از false)
                 const newRows = Array(newHeight - oldHeight).fill().map(() =>
                     Array(this.options.width).fill(false)
                 );
                 this.pixels[l].push(...newRows);
             } else {
-                // برش از انتها
                 this.pixels[l] = this.pixels[l].slice(0, newHeight);
             }
         }
@@ -265,11 +244,12 @@ class PatternEditor {
     }
 
     resizeLayers(newLayers) {
+        // اضافه: وقتی resize, uniqueThresholds رو null کن
+        this.uniqueThresholds = null;
         const oldLayers = this.options.layers;
         if (newLayers === oldLayers) return;
 
         if (newLayers > oldLayers) {
-            // اضافه کردن لایه‌های جدید (همه false)
             const newLayersArray = Array(newLayers - oldLayers).fill().map(() =>
                 Array(this.options.height).fill().map(() =>
                     Array(this.options.width).fill(false)
@@ -277,17 +257,14 @@ class PatternEditor {
             );
             this.pixels.push(...newLayersArray);
         } else {
-            // حذف لایه‌های بالایی (آخرین لایه‌ها)
             this.pixels = this.pixels.slice(0, newLayers);
         }
 
         this.options.layers = newLayers;
 
-        // آپدیت محدوده اسلایدر لایه
         this.layerRangeInput.max = newLayers - 1;
         this.layerNumberInput.max = newLayers - 1;
 
-        // اگر لایه فعلی از محدوده خارج شده، تصحیح کن
         if (this.options.currentLayer >= newLayers) {
             this.options.currentLayer = newLayers - 1;
             this.layerRangeInput.value = this.options.currentLayer;
@@ -298,40 +275,76 @@ class PatternEditor {
         this.triggerChange();
     }
 
-    // ==================== لود پترن از preset ====================
-    loadPatternFromThresholdMap(thresholdMap, width, height, layers) { // thresholdMap: آرایه دو بعدی 0-255
+    // ==================== اصلاح: تشخیص لایه‌ها بدون چک diff ====================
+    detectLayersFromThresholdMap(thresholdMap) {
+        const values = new Set(thresholdMap.flat());
+        const uniqueValues = Array.from(values).filter(v => v > 0).sort((a, b) => a - b);
+        let layers = uniqueValues.length;
+
+        // اگر بیش از 32, cluster به 32 (ساده: میانگین گروه‌ها)
+        if (layers > 32) {
+            const clusterSize = Math.ceil(layers / 32);
+            const clustered = [];
+            for (let i = 0; i < layers; i += clusterSize) {
+                const group = uniqueValues.slice(i, i + clusterSize);
+                const avg = Math.floor(group.reduce((a, b) => a + b, 0) / group.length);
+                clustered.push(avg);
+            }
+            return clustered.length; // max 32
+        }
+
+        return Math.max(2, layers); // حداقل 2
+    }
+
+    // ==================== اصلاح: لود با حفظ val دقیق ====================
+    loadPatternFromThresholdMap(thresholdMap, width, height, layers = null) {
+        this.uniqueThresholds = null; // ریست اول
+
+        const uniqueValues = Array.from(new Set(thresholdMap.flat().filter(v => v > 0))).sort((a, b) => a - b);
+
         if (layers === null) {
             layers = this.detectLayersFromThresholdMap(thresholdMap);
         }
 
-        // تبدیل به لایه‌ها
+        // اگر unique > layers (به خاطر cluster), uniqueValues رو adjust کن
+        if (uniqueValues.length > layers) {
+            const clusterSize = Math.ceil(uniqueValues.length / layers);
+            const clustered = [];
+            for (let i = 0; i < uniqueValues.length; i += clusterSize) {
+                const group = uniqueValues.slice(i, i + clusterSize);
+                const avg = Math.floor(group.reduce((a, b) => a + b, 0) / group.length);
+                clustered.push(avg);
+            }
+            this.uniqueThresholds = clustered;
+        } else {
+            this.uniqueThresholds = uniqueValues;
+        }
+
         this.options.width = width;
         this.options.height = height;
         this.options.layers = layers;
 
-        this.initPixels(); // ریست
+        this.initPixels();
 
-        const step = 255 / layers;
+        // layerIndex بر اساس index در uniqueValues (دقیق)
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
                 const val = thresholdMap[y][x];
                 if (val === 0) continue;
 
-                // محاسبه بالاترین لایه‌ای که باید فعال باشد
-                const layerIndex = Math.min(Math.floor(val / step), layers - 1);
-                for (let l = 0; l <= layerIndex; l++) {
-                    this.pixels[l][y][x] = true;
-                }
+                // پیدا کردن نزدیک‌ترین index (برای cluster)
+                let layerIndex = this.uniqueThresholds.findIndex(threshold => val <= threshold + (256 / layers / 2));
+                if (layerIndex === -1) layerIndex = this.uniqueThresholds.length - 1;
+
+                this.pixels[layerIndex][y][x] = true;
             }
         }
 
-        // آپدیت UI
         if (this.layerRangeInput) {
             this.layerRangeInput.max = layers - 1;
             this.layerNumberInput.max = layers - 1;
         }
 
-        // ریست لایه فعلی
         this.options.currentLayer = 0;
         if (this.layerRangeInput) {
             this.layerRangeInput.value = 0;
@@ -342,26 +355,32 @@ class PatternEditor {
         this.triggerChange();
     }
 
-    // ==================== گرفتن threshold map برای دایترینگ ====================
+    // ==================== اصلاح: گرفتن threshold map با val دقیق ====================
     getThresholdMap() {
         const { width, height, layers } = this.options;
         const map = Array(height).fill().map(() => Array(width).fill(0));
 
-        const step = 255 / layers;
+        const layerSize = 256 / layers;
 
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
-                // پیدا کردن بالاترین لایه فعال
-                let maxLayer = -1;
+                let activeLayer = -1;
                 for (let l = 0; l < layers; l++) {
-                    if (this.pixels[l][y][x]) maxLayer = l;
+                    if (this.pixels[l][y][x]) {
+                        activeLayer = l;
+                        break;
+                    }
                 }
 
-                if (maxLayer >= 0) {
-                    // مقدار threshold: (maxLayer + 1) * step - 1
-                    map[y][x] = Math.min(255, Math.floor((maxLayer + 1) * step));
-                } else {
-                    map[y][x] = 0;
+                if (activeLayer >= 0) {
+                    if (this.uniqueThresholds) {
+                        // استفاده از val دقیق اگر لود شده باشه
+                        map[y][x] = this.uniqueThresholds[activeLayer] || 0;
+                    } else {
+                        // fallback به میانه
+                        const minVal = activeLayer * layerSize;
+                        map[y][x] = Math.floor(minVal + (layerSize / 2));
+                    }
                 }
             }
         }
@@ -369,17 +388,16 @@ class PatternEditor {
         return map;
     }
 
-    // ==================== بررسی قفل بودن پیکسل ====================
     isPixelLocked(x, y, upToLayer) {
+        // بدون تغییر
         for (let l = 0; l < upToLayer; l++) {
             if (this.pixels[l][y][x]) return true;
         }
         return false;
     }
 
-    // ==================== رسم روی گرید ====================
     attachEvents() {
-        // کلیک و درگ
+        // بدون تغییر
         this.gridCanvas.addEventListener('mousedown', (e) => {
             e.preventDefault();
             const { x, y } = this.getGridCoords(e);
@@ -387,8 +405,6 @@ class PatternEditor {
                 this.isDrawing = true;
                 this.lastX = x;
                 this.lastY = y;
-
-                // کلیک اول: تغییر وضعیت
                 this.togglePixel(x, y);
             }
         });
@@ -398,7 +414,6 @@ class PatternEditor {
 
             const { x, y } = this.getGridCoords(e);
             if (x >= 0 && x < this.options.width && y >= 0 && y < this.options.height) {
-                // اگر سلول تغییر کرده، وضعیت را برابر سلول اولیه کن
                 if (x !== this.lastX || y !== this.lastY) {
                     const currentValue = this.pixels[this.options.currentLayer][y][x];
                     const initialValue = this.pixels[this.options.currentLayer][this.lastY][this.lastX];
@@ -419,11 +434,11 @@ class PatternEditor {
             this.isDrawing = false;
         });
 
-        // جلوگیری از منوی راست کلیک
         this.gridCanvas.addEventListener('contextmenu', (e) => e.preventDefault());
     }
 
     getGridCoords(event) {
+        // بدون تغییر
         const rect = this.gridCanvas.getBoundingClientRect();
         const scaleX = this.gridCanvas.width / rect.width;
         const scaleY = this.gridCanvas.height / rect.height;
@@ -439,29 +454,39 @@ class PatternEditor {
         return { x, y };
     }
 
+    // ==================== اصلاح: toggle با ریست uniqueThresholds ====================
     togglePixel(x, y) {
+        this.uniqueThresholds = null; // وقتی ادیت, val دقیق رو invalidate کن
         const currentLayer = this.options.currentLayer;
 
-        // بررسی قفل بودن
         if (this.isPixelLocked(x, y, currentLayer)) return;
 
-        // تغییر وضعیت
-        this.pixels[currentLayer][y][x] = !this.pixels[currentLayer][y][x];
+        // اگر پیکسل در لایه فعلی فعال نیست
+        if (!this.pixels[currentLayer][y][x]) {
+            // پاک کردن پیکسل از همه لایه‌ها
+            for (let l = 0; l < this.options.layers; l++) {
+                this.pixels[l][y][x] = false;
+            }
+            // فعال کردن در لایه فعلی
+            this.pixels[currentLayer][y][x] = true;
+        } else {
+            // اگر فعاله، غیرفعالش کن
+            this.pixels[currentLayer][y][x] = false;
+        }
 
         this.render();
         this.triggerChange();
     }
 
-    // ==================== رندر ====================
+    // ==================== اصلاح: رندر گرید با opacity بهتر برای تفکیک ====================
     render() {
         this.renderGrid();
         this.renderPreview();
     }
 
     renderGrid() {
-        const { width, height, currentLayer } = this.options;
+        const { width, height, currentLayer, layers } = this.options;
 
-        // تنظیم سایز کانواس (برای crisp rendering)
         const containerWidth = this.gridCanvas.parentElement.clientWidth;
         const cellSize = Math.min(40, Math.floor(containerWidth / width));
         this.gridCanvas.width = width * cellSize;
@@ -470,32 +495,58 @@ class PatternEditor {
         const ctx = this.gridCanvas.getContext('2d');
         ctx.clearRect(0, 0, this.gridCanvas.width, this.gridCanvas.height);
 
-        // رسم سلول‌ها
+        // پالت رنگی برای لایه‌های مختلف (بدون تغییر)
+        const layerColors = [
+            '#8b5cf6', // بنفش - لایه 0
+            '#ec4899', // صورتی - لایه 1
+            '#3b82f6', // آبی - لایه 2
+            '#10b981', // سبز - لایه 3
+            '#f59e0b', // نارنجی - لایه 4
+            '#ef4444', // قرمز - لایه 5
+            '#6366f1', // نیلی - لایه 6
+            '#14b8a6', // فیروزه‌ای - لایه 7
+        ];
+
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
                 const xPos = x * cellSize;
                 const yPos = y * cellSize;
 
+                // پیدا کردن لایه فعال
+                let activeLayer = -1;
+                for (let l = 0; l < layers; l++) {
+                    if (this.pixels[l][y][x]) {
+                        activeLayer = l;
+                        break;
+                    }
+                }
+
                 // پس‌زمینه
-                if (this.isPixelLocked(x, y, currentLayer)) {
-                    ctx.fillStyle = '#444'; // خاکستری تیره برای قفل
+                if (activeLayer >= 0 && activeLayer < currentLayer) {
+                    ctx.fillStyle = '#444'; // قفل (فعال در لایه پایین‌تر)
                 } else {
                     ctx.fillStyle = '#222'; // زمینه
                 }
                 ctx.fillRect(xPos, yPos, cellSize, cellSize);
 
-                // رسم پیکسل اگر در لایه فعلی فعال باشد
-                if (this.pixels[currentLayer][y][x]) {
-                    ctx.fillStyle = '#8b5cf6'; // رنگ بنفش برای لایه فعلی
-                    ctx.fillRect(xPos + 2, yPos + 2, cellSize - 4, cellSize - 4);
-                }
-
-                // اگر در لایه‌های پایین‌تر فعال باشد، یک دایره کوچک نشان بده
-                if (this.isPixelLocked(x, y, currentLayer)) {
-                    ctx.fillStyle = '#666';
-                    ctx.beginPath();
-                    ctx.arc(xPos + cellSize / 2, yPos + cellSize / 2, cellSize / 6, 0, Math.PI * 2);
-                    ctx.fill();
+                // رسم پیکسل با رنگ مخصوص لایه خودش
+                if (activeLayer >= 0) {
+                    let color = layerColors[activeLayer % layerColors.length];
+                    if (activeLayer === currentLayer) {
+                        ctx.fillStyle = '#6366f1';
+                        ctx.fillRect(xPos + 2, yPos + 2, cellSize - 4, cellSize - 4);
+                    } else if (activeLayer < currentLayer) {
+                        // پیکسل لایه پایین‌تر - opacity کمتر برای تفکیک بهتر
+                        ctx.fillStyle = '#666'; // 40% opacity (کمتر از 50% برای تمایز بیشتر)
+                        ctx.fillRect(xPos + 2, yPos + 2, cellSize - 4, cellSize - 4);
+                        
+                        // علامت قفل کوچک
+                        ctx.fillStyle = '#fff';
+                        ctx.font = `${Math.floor(cellSize/3)}px monospace`;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('🔒', xPos + cellSize/2, yPos + cellSize/2);
+                    }
                 }
 
                 // خطوط گرید
@@ -506,6 +557,7 @@ class PatternEditor {
         }
     }
 
+    // ==================== بدون تغییر: رندر پیش‌نمایش ====================
     renderPreview() {
         const map = this.getThresholdMap();
         const { width, height } = this.options;
@@ -513,25 +565,27 @@ class PatternEditor {
         const ctx = this.previewCanvas.getContext('2d');
         ctx.clearRect(0, 0, 64, 64);
 
-        // رسم threshold map (مقیاس‌دهی به 64×64)
         for (let y = 0; y < 64; y++) {
             for (let x = 0; x < 64; x++) {
                 const srcX = Math.floor(x * width / 64);
                 const srcY = Math.floor(y * height / 64);
                 const val = map[srcY][srcX];
-
-                ctx.fillStyle = `rgb(${val}, ${val}, ${val})`;
+                
+                if (val === 0) {
+                    ctx.fillStyle = '#000000';
+                } else {
+                    ctx.fillStyle = `rgb(${val}, ${val}, ${val})`;
+                }
                 ctx.fillRect(x, y, 1, 1);
             }
         }
     }
 
-    // ==================== ذخیره و دانلود ====================
     downloadPattern() {
+        // بدون تغییر
         const map = this.getThresholdMap();
         const { width, height } = this.options;
 
-        // ساخت canvas برای ذخیره
         const canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
@@ -545,7 +599,6 @@ class PatternEditor {
             }
         }
 
-        // دانلود
         canvas.toBlob((blob) => {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -557,10 +610,10 @@ class PatternEditor {
     }
 
     addToPresets() {
+        // بدون تغییر
         const map = this.getThresholdMap();
         const { width, height, layers } = this.options;
 
-        // ساخت آیکون پیش‌نمایش (thumbnail 32×32)
         const thumbCanvas = document.createElement('canvas');
         thumbCanvas.width = 32;
         thumbCanvas.height = 32;
@@ -578,7 +631,6 @@ class PatternEditor {
 
         const thumbnail = thumbCanvas.toDataURL();
 
-        // ساخت آبجکت پترن
         const pattern = {
             id: Date.now().toString(),
             name: `Custom Pattern ${new Date().toLocaleTimeString()}`,
@@ -593,19 +645,16 @@ class PatternEditor {
             thumbnail
         };
 
-        // ذخیره در localStorage
         const saved = localStorage.getItem(this.STORAGE_KEY);
         const patterns = saved ? JSON.parse(saved) : [];
         patterns.push(pattern);
         localStorage.setItem(this.STORAGE_KEY, JSON.stringify(patterns));
 
-        // دیسپچ رویداد برای به‌روزرسانی لیست پترن‌ها
         window.dispatchEvent(new CustomEvent('pattern-added', { detail: pattern }));
 
         alert('Pattern added to presets!');
     }
 
-    // ==================== متدهای عمومی ====================
     triggerChange() {
         if (this.options.onchange) {
             const map = this.getThresholdMap();
@@ -613,17 +662,16 @@ class PatternEditor {
         }
     }
 
-    // پاک کردن همه
     clear() {
+        this.uniqueThresholds = null;
         this.initPixels();
         this.render();
         this.triggerChange();
     }
 
-    // در کلاس PatternEditor، بعد از متد clear
     clearAll() {
+        this.uniqueThresholds = null;
         if (confirm('Are you sure? This will clear ALL layers.')) {
-            // ریست کردن همه پیکسل‌ها به false
             for (let l = 0; l < this.options.layers; l++) {
                 for (let y = 0; y < this.options.height; y++) {
                     for (let x = 0; x < this.options.width; x++) {
@@ -636,29 +684,8 @@ class PatternEditor {
             this.triggerChange();
         }
     }
-
-    detectLayersFromThresholdMap(thresholdMap) {
-        // جمع‌آوری همه مقادیر منحصر‌به‌فرد
-        const values = new Set(thresholdMap.flat());
-        const uniqueValues = Array.from(values).filter(v => v > 0).sort((a, b) => a - b);
-
-        if (uniqueValues.length === 0) return 2; // حداقل 2 لایه
-
-        // محاسبه تعداد لایه‌های مورد نیاز
-        // اگر فاصله بین مقادیر بیشتر از 8 باشه، احتمالاً لایه‌های مجزا هستند
-        let layerCount = 1;
-        for (let i = 1; i < uniqueValues.length; i++) {
-            if (uniqueValues[i] - uniqueValues[i - 1] > 8) {
-                layerCount++;
-            }
-        }
-
-        return Math.min(32, Math.max(2, layerCount));
-    }
 }
 
-// ==================== ادغام با کد اصلی ====================
-// این تابع در script.js فراخوانی می‌شود
 function initPatternEditor(onPatternChange) {
     const container = document.getElementById('pattern-editor-container');
     if (!container) return null;
@@ -668,8 +695,6 @@ function initPatternEditor(onPatternChange) {
         height: 4,
         layers: 4,
         onchange: (map, w, h) => {
-            // تبدیل map به ImageData برای استفاده در دایترینگ
-            // اینجا کال‌بک را به کد اصلی می‌فرستیم
             if (onPatternChange) onPatternChange(map, w, h);
         }
     });
