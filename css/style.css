@@ -329,7 +329,7 @@ input[type="range"] {
 /* Pattern Grid - 5 columns */
 .pattern-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 0.6rem;
     /* margin-top: 0.3rem; */
     /* max-height: 260px; */
@@ -477,10 +477,11 @@ input[type="file"] {
 .error {
     background: #631c1c;
     color: #ffd6d6;
-    padding: 0.9rem 1.5rem;
+    padding: 0.4rem 1rem;
     border-radius: var(--radius-lg);
-    margin-top: 1.5rem;
-    border-left: 8px solid #f56565;
+    margin: 0 0.5rem 0.5rem;
+    border-left: 4px solid #f56565;
+    width: 100%;
 }
 
 .hidden {
