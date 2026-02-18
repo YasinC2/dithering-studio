@@ -3,6 +3,7 @@
 --------------------------------- */
 :root {
     --primary: #6366f1;
+    --primary-light: #8587f4;
     --primary-dark: #4f46e5;
     --bg: #0f172a;
     --surface: #1e293b;
@@ -57,6 +58,11 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #171e2c;
+}
+
+input:focus {
+    outline: none !important;
+    border-color: #7c869c !important;
 }
 
 /*********** Baseline, reset styles ***********/
@@ -151,7 +157,7 @@ label {
 
 .header h1 {
     font-size: 1.8rem;
-    background: linear-gradient(135deg, var(--primary), #a37dfa);
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -298,7 +304,7 @@ input[type="range"] {
 }
 
 .dropzone:hover {
-    border-color: #a78bfa;
+    border-color: var(--primary);
     background: #2f3543;
 }
 
@@ -417,7 +423,7 @@ input[type="file"] {
 }
 
 .btn.primary:hover {
-    background: #a07cf0;
+    background: var(--primary-light);
 }
 
 .btn.secondary {
@@ -520,7 +526,7 @@ input[type="file"] {
 }
 
 .pattern-editor-details summary:hover {
-    color: #8b5cf6;
+    color: var(--primary);
 }
 
 .pattern-editor {
@@ -633,12 +639,12 @@ input[type="file"] {
 }
 
 .editor-buttons .btn.small.primary {
-    background: #8b5cf6;
+    background: var(--primary);
     color: white;
 }
 
 .editor-buttons .btn.small.primary:hover {
-    background: #a07cf0;
+    background: var(--primary-dark);
 }
 
 .editor-buttons .btn.small.warning {

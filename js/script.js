@@ -21,8 +21,8 @@ const PRESET_PATTERNS = [
     { name: "Pattern", url: "patterns/dither-pattern-2.png" },
     { name: "Pattern", url: "patterns/dither-pattern-3.png" },
     { name: "Pattern", url: "patterns/dither-pattern-20_.png" },
+    { name: "Pattern", url: "patterns/dither-pattern-23.png" },
     { name: "Pattern", url: "patterns/dither-pattern-8_.png" },
-    { name: "Pattern", url: "patterns/dither-pattern-12_.png" },
     { name: "Pattern", url: "patterns/dither-pattern-4.png" },
     { name: "Pattern", url: "patterns/dither-pattern-4-r.png" },
     { name: "Pattern", url: "patterns/dither-pattern-5.png" },
@@ -65,6 +65,7 @@ const PRESET_PATTERNS = [
     { name: "Pattern", url: "patterns/dither-pattern-22-r.png" },
     { name: "Pattern", url: "patterns/dither-pattern-26.png" },
     { name: "Pattern", url: "patterns/dither-pattern-27.png" },
+    { name: "Pattern", url: "patterns/dither-pattern-12_.png" },
 ];
 
 /* -------------------------------
@@ -281,14 +282,27 @@ async function buildPatternGrid() {
                         }
                     }
 
-                    // تشخیص تعداد لایه‌ها (براساس بیشترین مقدار threshold)
-                    const uniqueValues = new Set(thresholdMap.flat());
-                    const layers = Math.min(32, uniqueValues.size);
+                    // اصلاح: layers بدون 0
+                    const uniqueValues = new Set(thresholdMap.flat().filter(v => v > 0));
+                    let layers = uniqueValues.size;
+
+                    // اگر >32, cluster
+                    if (layers > 32) {
+                        const uniqueSorted = Array.from(uniqueValues).sort((a, b) => a - b);
+                        const clusterSize = Math.ceil(uniqueSorted.length / 32);
+                        layers = 32;
+                        // cluster در editor مدیریت میشه
+                    }
+
+                    // // تشخیص تعداد لایه‌ها (براساس بیشترین مقدار threshold)
+                    // const uniqueValues = new Set(thresholdMap.flat());
+                    // const layers = Math.min(32, uniqueValues.size);
 
                     // اطمینان از حداقل 2 لایه
                     const finalLayers = Math.max(2, layers);
 
-                    window.patternEditor.loadPatternFromThresholdMap(thresholdMap, w, h, finalLayers);
+                    window.patternEditor.loadPatternFromThresholdMap(thresholdMap, w, h, layers);
+                    // window.patternEditor.loadPatternFromThresholdMap(thresholdMap, w, h, finalLayers);
 
                     // ===== آپدیت اینپوت‌ها =====
                     document.getElementById('editor-width').value = w;
@@ -825,9 +839,18 @@ function bindEvents() {
                         }
                     }
 
-                    // تشخیص تعداد لایه‌ها
-                    const uniqueValues = new Set(thresholdMap.flat());
-                    const layers = Math.min(32, uniqueValues.size);
+                    // // تشخیص تعداد لایه‌ها
+                    // const uniqueValues = new Set(thresholdMap.flat());
+                    // const layers = Math.min(32, uniqueValues.size);
+
+                    // اصلاح: layers بدون 0
+                    const uniqueValues = new Set(thresholdMap.flat().filter(v => v > 0));
+                    let layers = uniqueValues.size;
+
+                    if (layers > 32) {
+                        // cluster مشابه
+                        layers = 32;
+                    }
 
                     window.patternEditor.loadPatternFromThresholdMap(thresholdMap, w, h, layers);
 

@@ -495,18 +495,6 @@ class PatternEditor {
         const ctx = this.gridCanvas.getContext('2d');
         ctx.clearRect(0, 0, this.gridCanvas.width, this.gridCanvas.height);
 
-        // پالت رنگی برای لایه‌های مختلف (بدون تغییر)
-        const layerColors = [
-            '#8b5cf6', // بنفش - لایه 0
-            '#ec4899', // صورتی - لایه 1
-            '#3b82f6', // آبی - لایه 2
-            '#10b981', // سبز - لایه 3
-            '#f59e0b', // نارنجی - لایه 4
-            '#ef4444', // قرمز - لایه 5
-            '#6366f1', // نیلی - لایه 6
-            '#14b8a6', // فیروزه‌ای - لایه 7
-        ];
-
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
                 const xPos = x * cellSize;
@@ -531,7 +519,6 @@ class PatternEditor {
 
                 // رسم پیکسل با رنگ مخصوص لایه خودش
                 if (activeLayer >= 0) {
-                    let color = layerColors[activeLayer % layerColors.length];
                     if (activeLayer === currentLayer) {
                         ctx.fillStyle = '#6366f1';
                         ctx.fillRect(xPos + 2, yPos + 2, cellSize - 4, cellSize - 4);
