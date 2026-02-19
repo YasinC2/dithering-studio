@@ -68,6 +68,231 @@ const PRESET_PATTERNS = [
     { name: "Pattern", url: "patterns/dither-pattern-12_.png" },
 ];
 
+// Preset palettes from Lospec
+const PRESET_PALETTES = [
+    {
+        name: "Pastelito2",
+        url: "palettes/pastelito2-1x.png",
+        colors: 2,
+    },
+    {
+        name: "1-bit Chill",
+        url: "palettes/1-bit-chill-1x.png",
+        colors: 2,
+    },
+    {
+        name: "Calccurate Game",
+        url: "palettes/calccurate-game-boy-1x.png",
+        colors: 4,
+    },
+    {
+        name: "Original Gameboy",
+        url: "palettes/original-gameboy-1x.png",
+        colors: 4,
+    },
+    {
+        name: "Astro Boy",
+        url: "palettes/astro-boy-1x.png",
+        colors: 4,
+    },
+    {
+        name: "Snooker GB",
+        url: "palettes/snooker-gb-1x.png",
+        colors: 4,
+    },
+    {
+        name: "Lava GB",
+        url: "palettes/lava-gb-1x.png",
+        colors: 4,
+    },
+    {
+        name: "Ice Cream GB",
+        url: "palettes/ice-cream-gb-1x.png",
+        colors: 4,
+    },
+    {
+        name: "Hollow",
+        url: "palettes/hollow-1x.png",
+        colors: 4,
+    },
+    {
+        name: "Moonlight",
+        url: "palettes/moonlight-gb-1x.png",
+        colors: 4,
+    },
+    {
+        name: "Kid Icarus (SGB)",
+        url: "palettes/kid-icarus-sgb-1x.png",
+        colors: 4,
+    },
+    {
+        name: "AYY4",
+        url: "palettes/ayy4-1x.png",
+        colors: 4,
+    },
+    {
+        name: "EB GB Banana Flavour",
+        url: "palettes/eb-gb-banana-flavour-1x.png",
+        colors: 4,
+    },
+    {
+        name: "2bit demichrome",
+        url: "palettes/2bit-demichrome-1x.png",
+        colors: 4,
+    },
+    {
+        name: "minty fresh",
+        url: "palettes/minty-fresh-1x.png",
+        colors: 4,
+    },
+    {
+        name: "M-GB",
+        url: "palettes/m-gb-1x.png",
+        colors: 4,
+    },
+    {
+        name: "Calico 4",
+        url: "palettes/calico-4-1x.png",
+        colors: 4,
+    },
+    {
+        name: "Tea GB",
+        url: "palettes/tea-gb-1x.png",
+        colors: 4,
+    },
+    {
+        name: "Blues GB",
+        url: "palettes/blues-gb-1x.png",
+        colors: 4,
+    },
+    {
+        name: "Vireo 4",
+        url: "palettes/vireo-4-1x.png",
+        colors: 4,
+    },
+    {
+        name: "Twilight 5",
+        url: "palettes/twilight-5-1x.png",
+        colors: 5,
+    },
+    {
+        name: "Ink",
+        url: "palettes/ink-1x.png",
+        colors: 5,
+    },
+    {
+        name: "Blessing",
+        url: "palettes/blessing-1x.png",
+        colors: 5,
+    },
+    {
+        name: "Late Night Bath",
+        url: "palettes/late-night-bath-1x.png",
+        colors: 5,
+    },
+    {
+        name: "Oil 6",
+        url: "palettes/oil-6-1x.png",
+        colors: 6,
+    },
+    {
+        name: "Curiosities",
+        url: "palettes/curiosities-1x.png",
+        colors: 6,
+    },
+    {
+        name: "INKPINK",
+        url: "palettes/inkpink-1x.png",
+        colors: 6,
+    },
+    {
+        name: "Cryptic Ocean",
+        url: "palettes/cryptic-ocean-1x.png",
+        colors: 6,
+    },
+    {
+        name: "Bluberry-6",
+        url: "palettes/bluberry-6-1x.png",
+        colors: 6,
+    },
+    {
+        name: "Cursed Turkey",
+        url: "palettes/cursed-turkey-1x.png",
+        colors: 6,
+    },
+    {
+        name: "Divination",
+        url: "palettes/divination-1x.png",
+        colors: 7,
+    },
+    {
+        name: "Gold Masks",
+        url: "palettes/gold-masks-1x.png",
+        colors: 7,
+    },
+    {
+        name: "Midnight ablaze",
+        url: "palettes/midnight-ablaze-1x.png",
+        colors: 7,
+    },
+    {
+        name: "Eulbink",
+        url: "palettes/eulbink-1x.png",
+        colors: 7,
+    },
+    {
+        name: "SLSO8",
+        url: "palettes/slso8-1x.png",
+        colors: 8,
+    },
+    {
+        name: "Nyx8",
+        url: "palettes/nyx8-1x.png",
+        colors: 8,
+    },
+    {
+        name: "Ammo-8",
+        url: "palettes/ammo-8-1x.png",
+        colors: 8,
+    },
+    {
+        name: "CL8UDS",
+        url: "palettes/cl8uds-1x.png",
+        colors: 8,
+    },
+    {
+        name: "JustParchment8",
+        url: "palettes/justparchment8-1x.png",
+        colors: 8,
+    },
+    {
+        name: "Berry Nebula",
+        url: "palettes/berry-nebula-1x.png",
+        colors: 8,
+    },
+    {
+        name: "Citrink",
+        url: "palettes/citrink-1x.png",
+        colors: 8,
+    },
+    {
+        name: "Bastille-8",
+        url: "palettes/bastille-8-1x.png",
+        colors: 8,
+    },
+    // {
+    //     name: "",
+    //     url: "palettes/.png",
+    //     colors: ,
+    // },
+    // {
+    //     name: "",
+    //     url: "palettes/.png",
+    //     colors: ,
+    // },
+];
+
+
 /* -------------------------------
    GLOBAL STATE
 --------------------------------- */
@@ -83,7 +308,12 @@ const state = {
     processing: false,
     debounceTimer: null,
     currentPatternUrl: null,  // For filename generation
-    isCustomPattern: false    // Is custom pattern active?
+    isCustomPattern: false,   // Is custom pattern active?
+    // Palette state
+    paletteEnabled: false,
+    paletteColors: null,      // Array of {r, g, b} colors
+    paletteName: null,
+    customPaletteData: null,
 };
 
 let patternEditor = null;
@@ -111,7 +341,18 @@ const elements = {
     patternUpload: document.getElementById('patternUpload'),
     outputScaleSelect: document.getElementById('outputScale'),
     downloadBtn: document.getElementById('downloadBtn'),
-    resetBtn: document.getElementById('resetBtn')
+    resetBtn: document.getElementById('resetBtn'),
+    // Palette elements
+    paletteEnable: document.getElementById('paletteEnable'),
+    palettePresetsContainer: document.getElementById('palettePresetsContainer'),
+    paletteGrid: document.getElementById('paletteGrid'),
+    paletteUploadContainer: document.getElementById('paletteUploadContainer'),
+    paletteUpload: document.getElementById('paletteUpload'),
+    customPaletteInfo: document.getElementById('customPaletteInfo'),
+    customPaletteStrip: document.getElementById('customPaletteStrip'),
+    lospecPaletteUrl: document.getElementById('lospecPaletteUrl'),
+    loadLospecPaletteBtn: document.getElementById('loadLospecPaletteBtn'),
+    lospecPaletteError: document.getElementById('lospecPaletteError'),
 };
 
 /* -------------------------------
@@ -234,6 +475,258 @@ async function loadPatternFromUrl(url) {
 }
 
 /* -------------------------------
+   PALETTE FUNCTIONS
+--------------------------------- */
+
+// استخراج رنگ‌ها از تصویر پالت
+async function extractPaletteFromImage(imgData) {
+    const { width, height, data } = imgData;
+
+    // تشخیص اندازه بلوک بر اساس ارتفاع
+    let blockSize = 1;
+    if (height >= 32) blockSize = 32;
+    else if (height >= 16) blockSize = 16;
+    else if (height >= 8) blockSize = 8;
+
+    const numColors = Math.floor(width / blockSize);
+    const palette = [];
+
+    for (let c = 0; c < numColors; c++) {
+        // نمونه‌برداری از مرکز بلوک برای اطمینان
+        const centerX = c * blockSize + Math.floor(blockSize / 2);
+        const centerY = Math.floor(height / 2);
+        const idx = (centerY * width + centerX) * 4;
+
+        palette.push({
+            r: data[idx],
+            g: data[idx + 1],
+            b: data[idx + 2]
+        });
+    }
+
+    return palette;
+}
+
+// ایجاد نوار رنگی برای پیش‌نمایش پالت
+function createPaletteStrip(paletteColors, container) {
+    if (!container || !paletteColors || paletteColors.length === 0) return;
+
+    container.innerHTML = '';
+
+    for (const color of paletteColors) {
+        const div = document.createElement('div');
+        div.className = 'palette-strip-color';
+        div.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
+        container.appendChild(div);
+    }
+}
+
+// لود پالت از URL
+async function loadPaletteFromUrl(url) {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = url;
+    });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    const imgData = ctx.getImageData(0, 0, img.naturalWidth, img.naturalHeight);
+
+    return await extractPaletteFromImage(imgData);
+}
+
+// لود پالت از فایل
+async function loadPaletteFromFile(file) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            const imgData = ctx.getImageData(0, 0, img.naturalWidth, img.naturalHeight);
+
+            extractPaletteFromImage(imgData).then(resolve);
+        };
+        img.onerror = reject;
+        img.src = URL.createObjectURL(file);
+    });
+}
+
+// ساختن گرید پالت‌ها
+async function buildPaletteGrid() {
+    const grid = elements.paletteGrid;
+    if (!grid) return;
+
+    grid.innerHTML = '';
+
+    for (const palette of PRESET_PALETTES) {
+        const item = document.createElement('div');
+        item.className = 'palette-item';
+        item.dataset.url = palette.url;
+        item.dataset.name = palette.name;
+        item.dataset.colors = palette.colors;
+
+        const img = document.createElement('img');
+        img.className = 'palette-preview';
+        img.src = palette.url;
+        img.alt = palette.name;
+        img.loading = 'lazy';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'palette-name';
+        nameSpan.textContent = palette.name;
+
+        const colorsSpan = document.createElement('span');
+        colorsSpan.className = 'palette-colors hidden';
+        colorsSpan.textContent = `${palette.colors} colors`;
+
+        item.appendChild(img);
+        item.appendChild(nameSpan);
+        item.appendChild(colorsSpan);
+
+        item.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            document.querySelectorAll('.palette-item').forEach(el => el.classList.remove('selected'));
+            item.classList.add('selected');
+
+            try {
+                const paletteColors = await loadPaletteFromUrl(palette.url);
+
+                state.paletteColors = paletteColors;
+                state.paletteName = palette.name;
+                state.customPaletteData = null;
+
+                // نمایش نوار رنگی
+                if (elements.customPaletteStrip) {
+                    createPaletteStrip(paletteColors, elements.customPaletteStrip);
+                }
+                if (elements.customPaletteInfo) {
+                    elements.customPaletteInfo.textContent = `${palette.name} (${paletteColors.length} colors)`;
+                }
+
+                // اعمال روی تصویر اگر پالت فعال است
+                if (state.paletteEnabled) {
+                    processImage();
+                }
+            } catch (err) {
+                showError(`Failed to load palette: ${palette.name}`);
+            }
+        });
+
+        grid.appendChild(item);
+    }
+}
+
+function extractSlugFromLospecUrl(url) {
+    console.log(url);
+
+    // اگر فقط اسلاگ وارد شده باشه (مثلاً "greyt-bit")
+    if (!url.includes('/')) {
+        return url.trim().toLowerCase();
+    }
+
+    // اگر URL کامل باشه
+    try {
+        const urlObj = new URL(url);
+        console.log("URL: ", urlObj);
+
+        if (urlObj.hostname === 'lospec.com' && urlObj.pathname.startsWith('/palette-list/')) {
+            const slug = urlObj.pathname.split('/').pop();
+            console.log("---> ", slug);
+
+            return slug.toLowerCase();
+        }
+    } catch (e) {
+        // اگر URL معتبر نباشه
+        return null;
+    }
+    return null;
+}
+
+async function loadPaletteFromLospec(slug) {
+    const url = `https://lospec.com/palette-list/${slug}.json`;
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error('Palette not found');
+            }
+            throw new Error(`API error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // تبدیل رنگ‌های هگز به RGB
+        const paletteColors = data.colors.map(hex => hexToRgb(hex));
+
+        return {
+            name: data.name,
+            author: data.author,
+            colors: paletteColors
+        };
+    } catch (error) {
+        throw new Error(`Failed to load palette: ${error.message}`);
+    }
+}
+
+function hexToRgb(hex) {
+    // حذف # اگر وجود داشته باشه
+    hex = hex.replace(/^#/, '');
+
+    const r = parseInt(hex.slice(0, 2), 16);
+    const g = parseInt(hex.slice(2, 4), 16);
+    const b = parseInt(hex.slice(4, 6), 16);
+
+    return { r, g, b };
+}
+
+// اعمال پالت روی تصویر dither شده
+function applyPaletteToDitheredImage(imageData, paletteColors, mode) {
+    const { width, height, data } = imageData;
+    const output = new ImageData(width, height);
+
+    const steps = paletteColors.length - 1;
+
+    for (let i = 0; i < data.length; i += 4) {
+        let grayValue;
+
+        if (mode === 'BW') {
+            grayValue = data[i];
+        } else {
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            grayValue = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
+        }
+
+        const exactIndex = (grayValue / 255) * steps;
+        const index1 = Math.floor(exactIndex);
+        const index2 = Math.min(index1 + 1, steps);
+        const t = exactIndex - index1;
+
+        const color1 = paletteColors[index1];
+        const color2 = paletteColors[index2];
+
+        output.data[i] = Math.round(color1.r * (1 - t) + color2.r * t);
+        output.data[i + 1] = Math.round(color1.g * (1 - t) + color2.g * t);
+        output.data[i + 2] = Math.round(color1.b * (1 - t) + color2.b * t);
+        output.data[i + 3] = 255;
+    }
+
+    return output;
+}
+
+/* -------------------------------
    PATTERN GRID
 --------------------------------- */
 async function buildPatternGrid() {
@@ -267,63 +760,43 @@ async function buildPatternGrid() {
             try {
                 const imgData = await loadPatternFromUrl(pattern.url);
 
-                // ===== بخش جدید: لود در ادیتور =====
+                // ===== لود در ادیتور =====
                 if (window.patternEditor) {
-                    // تبدیل ImageData به threshold map
                     const w = imgData.width;
                     const h = imgData.height;
                     const thresholdMap = Array(h).fill().map(() => Array(w).fill(0));
 
-                    // استخراج مقادیر خاکستری از ImageData
                     for (let y = 0; y < h; y++) {
                         for (let x = 0; x < w; x++) {
                             const idx = (y * w + x) * 4;
-                            thresholdMap[y][x] = imgData.data[idx]; // مقدار قرمز = خاکستری
+                            thresholdMap[y][x] = imgData.data[idx];
                         }
                     }
 
-                    // اصلاح: layers بدون 0
                     const uniqueValues = new Set(thresholdMap.flat().filter(v => v > 0));
                     let layers = uniqueValues.size;
 
-                    // اگر >32, cluster
-                    if (layers > 32) {
-                        const uniqueSorted = Array.from(uniqueValues).sort((a, b) => a - b);
-                        const clusterSize = Math.ceil(uniqueSorted.length / 32);
-                        layers = 32;
-                        // cluster در editor مدیریت میشه
-                    }
-
-                    // // تشخیص تعداد لایه‌ها (براساس بیشترین مقدار threshold)
-                    // const uniqueValues = new Set(thresholdMap.flat());
-                    // const layers = Math.min(32, uniqueValues.size);
-
-                    // اطمینان از حداقل 2 لایه
-                    const finalLayers = Math.max(2, layers);
+                    if (layers > 32) layers = 32;
+                    if (layers < 2) layers = 2;
 
                     window.patternEditor.loadPatternFromThresholdMap(thresholdMap, w, h, layers);
-                    // window.patternEditor.loadPatternFromThresholdMap(thresholdMap, w, h, finalLayers);
 
-                    // ===== آپدیت اینپوت‌ها =====
                     document.getElementById('editor-width').value = w;
                     document.getElementById('editor-height').value = h;
                     document.getElementById('editor-layers').value = layers;
 
-                    // آپدیت محدوده اسلایدر لایه
                     window.patternEditor.layerRangeInput.max = layers - 1;
                     window.patternEditor.layerNumberInput.max = layers - 1;
                     window.patternEditor.layerRangeInput.value = 0;
                     window.patternEditor.layerNumberInput.value = 0;
-                    // =========================
                 }
-                // ===================================
 
                 state.patternImageData = imgData;
                 state.patternWidth = imgData.width;
                 state.patternHeight = imgData.height;
                 state.currentPatternUrl = pattern.url;
                 state.isCustomPattern = false;
-                elements.patternUpload.value = ''; // Clear custom upload
+                elements.patternUpload.value = '';
                 processImage();
             } catch (err) {
                 showError(`Failed to load pattern: ${pattern.name}`);
@@ -338,12 +811,11 @@ async function buildPatternGrid() {
     if (saved) {
         const customPatterns = JSON.parse(saved);
 
-        customPatterns.forEach((pattern, index) => {
+        customPatterns.forEach((pattern) => {
             const item = document.createElement('div');
             item.className = 'pattern-item custom';
             item.dataset.customId = pattern.id;
 
-            // تصویر پیش‌نمایش
             const img = document.createElement('img');
             img.className = 'pattern-preview';
             img.src = pattern.thumbnail;
@@ -353,20 +825,16 @@ async function buildPatternGrid() {
             nameSpan.className = 'pattern-name';
             nameSpan.textContent = pattern.name;
 
-            // آیکون حذف
             const deleteIcon = document.createElement('span');
             deleteIcon.className = 'delete-pattern';
             deleteIcon.innerHTML = '×';
             deleteIcon.addEventListener('click', (e) => {
                 e.stopPropagation();
                 if (confirm(`Delete "${pattern.name}"?`)) {
-                    // حذف از localStorage
                     const saved = localStorage.getItem('custom-dither-patterns');
                     const patterns = saved ? JSON.parse(saved) : [];
                     const newPatterns = patterns.filter(p => p.id !== pattern.id);
                     localStorage.setItem('custom-dither-patterns', JSON.stringify(newPatterns));
-
-                    // بازسازی گرید
                     buildPatternGrid();
                 }
             });
@@ -376,12 +844,9 @@ async function buildPatternGrid() {
             item.appendChild(deleteIcon);
 
             item.addEventListener('click', async () => {
-                // حذف selected از بقیه
                 document.querySelectorAll('.pattern-item').forEach(el => el.classList.remove('selected'));
                 item.classList.add('selected');
 
-                // لود پترن ذخیره‌شده در ادیتور
-                // بازسازی پیکسل‌ها از داده ذخیره‌شده
                 if (window.patternEditor) {
                     const pixels = pattern.data.map(layer =>
                         layer.map(row =>
@@ -389,14 +854,12 @@ async function buildPatternGrid() {
                         )
                     );
 
-                    // تنظیم ادیتور
                     window.patternEditor.options.width = pattern.width;
                     window.patternEditor.options.height = pattern.height;
                     window.patternEditor.options.layers = pattern.layers;
                     window.patternEditor.pixels = pixels;
                     window.patternEditor.options.currentLayer = 0;
 
-                    // آپدیت کنترل‌ها
                     document.getElementById('editor-width').value = pattern.width;
                     document.getElementById('editor-height').value = pattern.height;
                     document.getElementById('editor-layers').value = pattern.layers;
@@ -407,9 +870,7 @@ async function buildPatternGrid() {
                     window.patternEditor.layerNumberInput.value = 0;
 
                     window.patternEditor.render();
-                    // window.patternEditor.triggerChange();
 
-                    // ساخت threshold map مستقیماً از pixels
                     const { width, height, layers } = window.patternEditor.options;
                     const step = 255 / layers;
                     const thresholdMap = Array(height).fill().map(() => Array(width).fill(0));
@@ -426,7 +887,6 @@ async function buildPatternGrid() {
                         }
                     }
 
-                    // ساخت ImageData از thresholdMap
                     const canvas = document.createElement('canvas');
                     canvas.width = pattern.width;
                     canvas.height = pattern.height;
@@ -442,7 +902,6 @@ async function buildPatternGrid() {
 
                     const imgData = ctx.getImageData(0, 0, pattern.width, pattern.height);
 
-                    // تبدیل به grayscale
                     const grayData = new Uint8ClampedArray(pattern.width * pattern.height * 4);
                     for (let i = 0; i < pattern.width * pattern.height; i++) {
                         const r = imgData.data[i * 4];
@@ -461,9 +920,6 @@ async function buildPatternGrid() {
 
                     processImage();
                 }
-
-                // همچنین می‌توانیم برای دایترینگ استفاده کنیم
-                // ...
             });
 
             grid.appendChild(item);
@@ -471,7 +927,7 @@ async function buildPatternGrid() {
     }
 
     // Select first pattern by default
-    if (PRESET_PATTERNS.length > 0) {
+    if (PRESET_PATTERNS.length > 0 && grid.children.length > 0) {
         const firstItem = grid.children[0];
         firstItem.classList.add('selected');
         try {
@@ -573,7 +1029,7 @@ async function processImage() {
         gridImgData = applyBrightnessContrast(gridImgData, brightness, contrast);
     }
 
-    // 3. Dither
+    // 3. Dither with selected mode (BW or RGB)
     const ditheredGrid = ditherImage(
         gridImgData,
         state.patternImageData,
@@ -583,9 +1039,21 @@ async function processImage() {
         mode,
         invert
     );
-    gridCtx.putImageData(ditheredGrid, 0, 0);
 
-    // 4. Upscale to original size (nearest neighbor)
+    let finalGridData = ditheredGrid;
+
+    // 4. Apply palette if enabled
+    if (state.paletteEnabled && state.paletteColors && state.paletteColors.length > 0) {
+        finalGridData = applyPaletteToDitheredImage(
+            ditheredGrid,
+            state.paletteColors,
+            mode
+        );
+    }
+
+    gridCtx.putImageData(finalGridData, 0, 0);
+
+    // 5. Upscale to original size (nearest neighbor)
     const outputCanvas = document.createElement('canvas');
     outputCanvas.width = W;
     outputCanvas.height = H;
@@ -595,19 +1063,21 @@ async function processImage() {
 
     state.processedCanvas = outputCanvas;
 
-    // 5. Render preview (CSS scaling only - we don't change canvas dimensions!)
+    // 6. Render preview
     renderPreview();
 
-    // 6. Update stats
-    elements.stats.innerText = `Output: ${W}×${H} · Pixel Size: ${pixelSize} · Steps: ${steps} · Mode: ${mode}`;
+    // 7. Update stats
+    let statsText = `Output: ${W}×${H} · Pixel Size: ${pixelSize} · Steps: ${steps} · Mode: ${mode}`;
+    if (state.paletteEnabled && state.paletteName) {
+        statsText += ` · Palette: ${state.paletteName}`;
+    }
+    elements.stats.innerText = statsText;
 
     state.processing = false;
 }
 
 /* -------------------------------
    PREVIEW RENDERING
-   CRITICAL: We NEVER change canvas.width/height
-   Only use CSS for scaling to preserve pixel sharpness
 --------------------------------- */
 function renderPreview() {
     if (!state.processedCanvas) return;
@@ -615,19 +1085,13 @@ function renderPreview() {
     const canvas = elements.previewCanvas;
     const ctx = canvas.getContext('2d');
 
-    // IMPORTANT: Set canvas dimensions to match the processed image ONCE
-    // This is done only when the image changes, not for scaling
     if (canvas.width !== state.processedCanvas.width || canvas.height !== state.processedCanvas.height) {
         canvas.width = state.processedCanvas.width;
         canvas.height = state.processedCanvas.height;
     }
 
-    // Draw the image at 1:1 pixel ratio
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(state.processedCanvas, 0, 0);
-
-    // DO NOT change canvas.width/height here!
-    // CSS handles the display size via .preview-canvas { width: 100%; max-width: 700px; }
 }
 
 /* -------------------------------
@@ -660,7 +1124,12 @@ function downloadPNG() {
 
     const steps = state.settings.steps;
     const mode = state.settings.mode.toLowerCase();
-    const filename = `${patternName}_steps${steps}_${mode}.png`;
+    let filename = `${patternName}_steps${steps}_${mode}`;
+
+    if (state.paletteEnabled && state.paletteName) {
+        filename += `_${state.paletteName.replace(/\s+/g, '-')}`;
+    }
+    filename += '.png';
 
     exportCanvas.toBlob((blob) => {
         const url = URL.createObjectURL(blob);
@@ -683,6 +1152,7 @@ async function loadSampleImage() {
             img.onload = resolve;
             img.onerror = reject;
         });
+
         state.originalImage = img;
         state.originalWidth = img.naturalWidth;
         state.originalHeight = img.naturalHeight;
@@ -694,15 +1164,13 @@ async function loadSampleImage() {
 
 /* -------------------------------
    RESET SETTINGS ONLY
-   Does NOT clear image or pattern
 --------------------------------- */
 function resetSettingsOnly() {
-    // Reset UI controls to default values
     elements.pixelSizeSlider.value = DEFAULT.pixelSize;
     elements.pixelSizeValue.textContent = DEFAULT.pixelSize;
     elements.stepsSlider.value = DEFAULT.steps;
     elements.stepsValue.textContent = DEFAULT.steps;
-    elements.modeRadios[0].checked = true; // BW
+    elements.modeRadios[0].checked = true;
     elements.invertCheck.checked = DEFAULT.invert;
     elements.brightnessSlider.value = DEFAULT.brightness;
     elements.brightnessValue.textContent = DEFAULT.brightness;
@@ -710,10 +1178,14 @@ function resetSettingsOnly() {
     elements.contrastValue.textContent = DEFAULT.contrast;
     elements.outputScaleSelect.value = DEFAULT.outputScale;
 
-    // Update state
+    // Reset palette
+    elements.paletteEnable.checked = false;
+    state.paletteEnabled = false;
+    elements.palettePresetsContainer.style.display = 'none';
+    elements.paletteUploadContainer.style.display = 'none';
+
     state.settings = { ...DEFAULT };
 
-    // Reprocess if image exists
     if (state.originalImage) {
         processImage();
     }
@@ -723,21 +1195,7 @@ function resetSettingsOnly() {
    EVENT BINDINGS
 --------------------------------- */
 function bindEvents() {
-    // Image upload (dropzone)
-    const dropzone = elements.dropzone;
     const fileInput = elements.fileInput;
-
-    // dropzone.addEventListener('click', () => fileInput.click());
-    // dropzone.addEventListener('dragover', (e) => {
-    //     e.preventDefault();
-    //     dropzone.classList.add('drag-over');
-    // });
-    // dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
-    // dropzone.addEventListener('drop', (e) => {
-    //     e.preventDefault();
-    //     dropzone.classList.remove('drag-over');
-    //     if (e.dataTransfer.files.length) handleImageFile(e.dataTransfer.files[0]);
-    // });
 
     fileInput.addEventListener('change', (e) => {
         if (e.target.files.length) handleImageFile(e.target.files[0]);
@@ -758,7 +1216,6 @@ function bindEvents() {
         img.src = URL.createObjectURL(file);
     }
 
-    // Sliders with debounce
     const debouncedProcess = debounce(processImage, 200);
 
     elements.pixelSizeSlider.addEventListener('input', (e) => {
@@ -811,7 +1268,6 @@ function bindEvents() {
             }
 
             try {
-                // ===== بررسی اندازه تصویر =====
                 const img = new Image();
                 img.src = URL.createObjectURL(e.target.files[0]);
                 await new Promise((resolve) => { img.onload = resolve; });
@@ -822,11 +1278,9 @@ function bindEvents() {
                         return;
                     }
                 }
-                // ==============================
 
                 const imgData = await loadPatternFromFile(e.target.files[0]);
 
-                // ===== آپدیت ادیتور =====
                 if (window.patternEditor) {
                     const w = imgData.width;
                     const h = imgData.height;
@@ -839,18 +1293,11 @@ function bindEvents() {
                         }
                     }
 
-                    // // تشخیص تعداد لایه‌ها
-                    // const uniqueValues = new Set(thresholdMap.flat());
-                    // const layers = Math.min(32, uniqueValues.size);
-
-                    // اصلاح: layers بدون 0
                     const uniqueValues = new Set(thresholdMap.flat().filter(v => v > 0));
                     let layers = uniqueValues.size;
 
-                    if (layers > 32) {
-                        // cluster مشابه
-                        layers = 32;
-                    }
+                    if (layers > 32) layers = 32;
+                    if (layers < 2) layers = 2;
 
                     window.patternEditor.loadPatternFromThresholdMap(thresholdMap, w, h, layers);
 
@@ -863,14 +1310,12 @@ function bindEvents() {
                     window.patternEditor.layerRangeInput.value = 0;
                     window.patternEditor.layerNumberInput.value = 0;
                 }
-                // ========================
 
                 state.patternImageData = imgData;
                 state.patternWidth = imgData.width;
                 state.patternHeight = imgData.height;
                 state.isCustomPattern = true;
                 state.currentPatternUrl = null;
-                // Remove selected class from grid items
                 document.querySelectorAll('.pattern-item').forEach(el => el.classList.remove('selected'));
                 processImage();
             } catch (err) {
@@ -879,22 +1324,138 @@ function bindEvents() {
         }
     });
 
-    // Output scale
+    // Palette events
+    if (elements.paletteEnable) {
+        elements.paletteEnable.addEventListener('change', (e) => {
+            const enabled = e.target.checked;
+            state.paletteEnabled = enabled;
+
+            elements.palettePresetsContainer.style.display = enabled ? 'block' : 'none';
+            elements.paletteUploadContainer.style.display = enabled ? 'block' : 'none';
+
+            if (enabled && state.paletteColors && state.paletteColors.length > 0) {
+                processImage();
+            } else if (!enabled) {
+                processImage();
+            }
+        });
+    }
+
+    if (elements.paletteUpload) {
+        elements.paletteUpload.addEventListener('change', async (e) => {
+            if (e.target.files.length) {
+                try {
+                    const img = new Image();
+                    img.src = URL.createObjectURL(e.target.files[0]);
+                    await new Promise((resolve) => { img.onload = resolve; });
+
+                    // if (img.width < 4 || img.height < 1) {
+                    if (img.width < 2 || img.height < 1) {
+                        showError('Invalid palette image');
+                        return;
+                    }
+
+                    const paletteColors = await loadPaletteFromFile(e.target.files[0]);
+
+                    state.paletteColors = paletteColors;
+                    state.paletteName = 'Custom Palette';
+
+                    if (elements.customPaletteStrip) {
+                        createPaletteStrip(paletteColors, elements.customPaletteStrip);
+                    }
+                    if (elements.customPaletteInfo) {
+                        elements.customPaletteInfo.textContent = `Custom Palette (${paletteColors.length} colors)`;
+                    }
+
+                    document.querySelectorAll('.palette-item').forEach(el => el.classList.remove('selected'));
+
+                    if (state.paletteEnabled) {
+                        processImage();
+                    }
+                } catch (err) {
+                    showError('Failed to load custom palette');
+                }
+            }
+        });
+    }
+
     elements.outputScaleSelect.addEventListener('change', (e) => {
         state.settings.outputScale = parseInt(e.target.value, 10);
     });
 
-    // Download button
     elements.downloadBtn.addEventListener('click', downloadPNG);
-
-    // Reset button (settings only)
     elements.resetBtn.addEventListener('click', resetSettingsOnly);
 
-    // Window resize - NO canvas dimension changes, just trigger repaint?
-    // Actually we don't need to do anything, CSS handles it
-    // But we should ensure the canvas content is still there (it is)
+    // در تابع bindEvents، اضافه کنید:
+    if (elements.loadLospecPaletteBtn) {
+        elements.loadLospecPaletteBtn.addEventListener('click', async () => {
+            const input = elements.lospecPaletteUrl.value.trim();
+            if (!input) {
+                showLospecError('Please enter a palette name or URL');
+                return;
+            }
+
+            const slug = extractSlugFromLospecUrl(input);
+            console.log("SLUG: ", slug);
+
+            if (!slug) {
+                showLospecError('Invalid Lospec palette URL');
+                return;
+            }
+
+            // نمایش حالت لودینگ
+            elements.loadLospecPaletteBtn.disabled = true;
+            elements.loadLospecPaletteBtn.textContent = 'Loading...';
+            hideLospecError();
+
+            try {
+                const palette = await loadPaletteFromLospec(slug);
+
+                state.paletteColors = palette.colors;
+                state.paletteName = palette.name;
+
+                // نمایش نوار رنگی
+                if (elements.customPaletteStrip) {
+                    createPaletteStrip(palette.colors, elements.customPaletteStrip);
+                }
+                if (elements.customPaletteInfo) {
+                    elements.customPaletteInfo.textContent = `${palette.name} by ${palette.author} (${palette.colors.length} colors)`;
+                }
+
+                // حذف selected از پالت‌های آماده
+                document.querySelectorAll('.palette-item').forEach(el => el.classList.remove('selected'));
+
+                if (state.paletteEnabled) {
+                    processImage();
+                }
+
+                // پاک کردن ورودی
+                elements.lospecPaletteUrl.value = '';
+
+            } catch (error) {
+                showLospecError(error.message);
+            } finally {
+                elements.loadLospecPaletteBtn.disabled = false;
+                elements.loadLospecPaletteBtn.textContent = 'Load';
+            }
+        });
+    }
+
+    // توابع کمکی برای نمایش/پنهان کردن خطا
+    function showLospecError(message) {
+        if (elements.lospecPaletteError) {
+            elements.lospecPaletteError.textContent = message;
+            elements.lospecPaletteError.classList.remove('hidden');
+        }
+    }
+
+    function hideLospecError() {
+        if (elements.lospecPaletteError) {
+            elements.lospecPaletteError.classList.add('hidden');
+        }
+    }
+
     window.addEventListener('resize', () => {
-        // Just force a small redraw if needed (rare)
         if (state.processedCanvas) {
             const ctx = elements.previewCanvas.getContext('2d');
             ctx.imageSmoothingEnabled = false;
@@ -905,10 +1466,6 @@ function bindEvents() {
 
 function setupPatternEditor() {
     window.patternEditor = initPatternEditor((thresholdMap, width, height) => {
-        // اینجا thresholdMap رو باید تبدیل به ImageData کنیم
-        // و در state.patternImageData قرار دهیم
-
-        // ساخت ImageData از thresholdMap
         const canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
@@ -924,7 +1481,6 @@ function setupPatternEditor() {
 
         const imgData = ctx.getImageData(0, 0, width, height);
 
-        // تبدیل به grayscale (همانطور که pattern loader انجام می‌دهد)
         const grayData = new Uint8ClampedArray(width * height * 4);
         for (let i = 0; i < width * height; i++) {
             const r = imgData.data[i * 4];
@@ -941,10 +1497,8 @@ function setupPatternEditor() {
         state.isCustomPattern = true;
         state.currentPatternUrl = null;
 
-        // حذف کلاس selected از گرید
         document.querySelectorAll('.pattern-item').forEach(el => el.classList.remove('selected'));
 
-        // اعمال دایترینگ
         processImage();
     });
 }
@@ -978,22 +1532,17 @@ async function validatePatternImage(file) {
 async function init() {
     bindEvents();
 
-    // Build pattern grid and load first pattern
     await buildPatternGrid();
     setupPatternEditor();
+    await buildPaletteGrid();
 
-    // ===== بخش جدید: گوش دادن به رویداد اضافه شدن پترن =====
     window.addEventListener('pattern-added', () => {
-        // بازسازی گرید پترن‌ها
         buildPatternGrid();
     });
-    // ==========================================================
 
-    // Display initial slider values
     elements.brightnessValue.textContent = DEFAULT.brightness;
     elements.contrastValue.textContent = DEFAULT.contrast;
 
-    // Auto-load sample.jpg
     await loadSampleImage();
 }
 
