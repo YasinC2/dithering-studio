@@ -342,6 +342,10 @@ const elements = {
     outputScaleSelect: document.getElementById('outputScale'),
     downloadBtn: document.getElementById('downloadBtn'),
     resetBtn: document.getElementById('resetBtn'),
+    resetPixelBtn: document.getElementById('resetPixelBtn'),
+    resetStepsBtn: document.getElementById('resetStepsBtn'),
+    resetBrightnessBtn: document.getElementById('resetBrightnessBtn'),
+    resetContrastBtn: document.getElementById('resetContrastBtn'),
     // Palette elements
     paletteEnable: document.getElementById('paletteEnable'),
     palettePresetsContainer: document.getElementById('palettePresetsContainer'),
@@ -1191,6 +1195,50 @@ function resetSettingsOnly() {
     }
 }
 
+function resetPixelOnly() {
+    elements.pixelSizeSlider.value = DEFAULT.pixelSize;
+    elements.pixelSizeValue.textContent = DEFAULT.pixelSize;
+
+    state.settings.pixelSize = DEFAULT.pixelSize;
+
+    if (state.originalImage) {
+        processImage();
+    }
+}
+
+function resetStepsOnly() {
+    elements.stepsSlider.value = DEFAULT.steps;
+    elements.stepsValue.textContent = DEFAULT.steps;
+
+    state.settings.steps = DEFAULT.steps;
+
+    if (state.originalImage) {
+        processImage();
+    }
+}
+
+function resetBrightnessOnly() {
+    elements.brightnessSlider.value = DEFAULT.brightness;
+    elements.brightnessValue.textContent = DEFAULT.brightness;
+
+    state.settings.brightness = DEFAULT.brightness;
+
+    if (state.originalImage) {
+        processImage();
+    }
+}
+
+function resetContrastOnly() {
+    elements.contrastSlider.value = DEFAULT.contrast;
+    elements.contrastValue.textContent = DEFAULT.contrast;
+
+    state.settings.contrast = DEFAULT.contrast;
+
+    if (state.originalImage) {
+        processImage();
+    }
+}
+
 /* -------------------------------
    EVENT BINDINGS
 --------------------------------- */
@@ -1385,6 +1433,10 @@ function bindEvents() {
 
     elements.downloadBtn.addEventListener('click', downloadPNG);
     elements.resetBtn.addEventListener('click', resetSettingsOnly);
+    elements.resetPixelBtn.addEventListener('click', resetPixelOnly);
+    elements.resetStepsBtn.addEventListener('click', resetStepsOnly);
+    elements.resetBrightnessBtn.addEventListener('click', resetBrightnessOnly);
+    elements.resetContrastBtn.addEventListener('click', resetContrastOnly);
 
     // در تابع bindEvents، اضافه کنید:
     if (elements.loadLospecPaletteBtn) {
@@ -1405,7 +1457,7 @@ function bindEvents() {
 
             // نمایش حالت لودینگ
             elements.loadLospecPaletteBtn.disabled = true;
-            elements.loadLospecPaletteBtn.textContent = 'Loading...';
+            elements.loadLospecPaletteBtn.innerHTML = '<svg class="icon loading-icon"><use href="#icon-loading"></use></svg>';
             hideLospecError();
 
             try {
@@ -1436,7 +1488,7 @@ function bindEvents() {
                 showLospecError(error.message);
             } finally {
                 elements.loadLospecPaletteBtn.disabled = false;
-                elements.loadLospecPaletteBtn.textContent = 'Load';
+                elements.loadLospecPaletteBtn.innerHTML = '<svg class="icon"><use href="#icon-load"></use></svg>';
             }
         });
     }

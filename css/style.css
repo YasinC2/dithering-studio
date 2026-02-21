@@ -442,6 +442,16 @@ input[type="file"] {
     background: #40475a;
 }
 
+.btn.btn-icon {
+    flex: 0;
+    padding: 0.5rem !important;
+    --icon-size: 18px;
+}
+
+.btn.btn-icon .loading-icon {
+    animation: loading 2s linear infinite;
+}
+
 /* -------------------------------
    Preview Area - CSS controlled size only!
    Canvas dimensions are NOT changed programmatically
@@ -458,7 +468,7 @@ input[type="file"] {
 
 .preview-canvas {
     width: 100%;
-    max-height: calc(100vh - 95px);
+    max-height: calc(100vh - 115px);
     object-fit: contain;
     /* max-width: 700px; */
     /* Large, CSS-only sizing */
@@ -821,4 +831,55 @@ summary .icon {
     color: #9aa1b5;
     margin-bottom: 0.5rem;
     font-style: italic;
+}
+
+.d-block {
+    display: block;
+}
+
+.slider-label {
+    display: block;
+    position: relative;
+}
+
+.slider-label button {
+    position: absolute;
+    right: 0;
+    top: 6px;
+    left: auto;
+    bottom: auto;
+    background: transparent;
+    border: none;
+    color: currentColor;
+    outline: none;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+}
+
+.slider-label button:focus {
+    outline: none;
+}
+
+.slider-label:hover button {
+    opacity: 0.5;
+    visibility: visible;
+}
+
+.slider-label button:hover {
+    opacity: 0.8;
+}
+
+.slider-label button .icon {
+    --icon-size: 14px;
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
