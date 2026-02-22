@@ -20,11 +20,13 @@ const PRESET_PATTERNS = [
     { name: "Pattern", url: "patterns/dither-pattern-1.png" },
     { name: "Pattern", url: "patterns/dither-pattern-2.png" },
     { name: "Pattern", url: "patterns/dither-pattern-3.png" },
+    { name: "Pattern", url: "patterns/dither-pattern-8_.png" },
     { name: "Pattern", url: "patterns/dither-pattern-20_.png" },
     { name: "Pattern", url: "patterns/dither-pattern-23.png" },
-    { name: "Pattern", url: "patterns/dither-pattern-8_.png" },
     { name: "Pattern", url: "patterns/dither-pattern-4.png" },
     { name: "Pattern", url: "patterns/dither-pattern-4-r.png" },
+    { name: "Pattern", url: "patterns/dither-pattern-12-r.png" },
+    { name: "Pattern", url: "patterns/dither-pattern-12.png" },
     { name: "Pattern", url: "patterns/dither-pattern-5.png" },
     { name: "Pattern", url: "patterns/dither-pattern-5-r.png" },
     { name: "Pattern", url: "patterns/dither-pattern-8.png" },
@@ -39,8 +41,6 @@ const PRESET_PATTERNS = [
     { name: "Pattern", url: "patterns/dither-pattern-10-r.png" },
     { name: "Pattern", url: "patterns/dither-pattern-11.png" },
     { name: "Pattern", url: "patterns/dither-pattern-11-r.png" },
-    { name: "Pattern", url: "patterns/dither-pattern-12.png" },
-    { name: "Pattern", url: "patterns/dither-pattern-12-r.png" },
     { name: "Pattern", url: "patterns/dither-pattern-13.png" },
     { name: "Pattern", url: "patterns/dither-pattern-13-r.png" },
     { name: "Pattern", url: "patterns/dither-pattern-13_.png" },
@@ -357,6 +357,7 @@ const elements = {
     lospecPaletteUrl: document.getElementById('lospecPaletteUrl'),
     loadLospecPaletteBtn: document.getElementById('loadLospecPaletteBtn'),
     lospecPaletteError: document.getElementById('lospecPaletteError'),
+    togglePreviewScaleBtn: document.getElementById('togglePreviewScaleBtn'),
 };
 
 /* -------------------------------
@@ -600,6 +601,7 @@ async function buildPaletteGrid() {
             e.stopPropagation();
             document.querySelectorAll('.palette-item').forEach(el => el.classList.remove('selected'));
             item.classList.add('selected');
+            item.classList.add('loading');
 
             try {
                 const paletteColors = await loadPaletteFromUrl(palette.url);
@@ -619,9 +621,11 @@ async function buildPaletteGrid() {
                 // اعمال روی تصویر اگر پالت فعال است
                 if (state.paletteEnabled) {
                     processImage();
+                    item.classList.remove('loading');
                 }
             } catch (err) {
                 showError(`Failed to load palette: ${palette.name}`);
+                item.classList.remove('loading');
             }
         });
 
@@ -1429,6 +1433,18 @@ function bindEvents() {
 
     elements.outputScaleSelect.addEventListener('change', (e) => {
         state.settings.outputScale = parseInt(e.target.value, 10);
+    });
+
+    elements.togglePreviewScaleBtn.addEventListener('click', (e) => {
+        const buttonIcon = document.querySelector('#togglePreviewScaleBtn .icon use');
+        const isMaximized =  previewCanvas.classList.toggle('maximize');
+        console.log(isMaximized, buttonIcon);
+        if (isMaximized) {
+            buttonIcon.setAttribute('href', '#icon-minimize');
+        } else {
+            buttonIcon.setAttribute('href', '#icon-maximize');
+        }
+
     });
 
     elements.downloadBtn.addEventListener('click', downloadPNG);

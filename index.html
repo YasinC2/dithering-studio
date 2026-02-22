@@ -63,48 +63,51 @@
                         </h3>
                         <!-- Pixel Size -->
                         <div class="control-row">
-                            <label class="slider-label">
+                            <div class="slider-label">
                                 Pixel Size <span id="pixelSizeValue">4</span>
                                 <button id="resetPixelBtn">
                                     <svg class="icon">
                                         <use href="#icon-reset"></use>
                                     </svg>
                                 </button>
-                            </label>
+                            </div>
                             <input type="range" id="pixelSize" min="1" max="20" value="4" step="1">
                         </div>
 
                         <!-- Steps (max 20) -->
                         <div class="control-row">
-                            <label class="slider-label">
+                            <div class="slider-label">
                                 Steps <span id="stepsValue">2</span>
                                 <button id="resetStepsBtn">
                                     <svg class="icon">
                                         <use href="#icon-reset"></use>
                                     </svg>
-                                </button></label>
-                            <input type="range" id="steps" min="2" max="10" value="2" step="1">
+                                </button>
+                            </div>
+                            <input type="range" id="steps" min="2" max="20" value="2" step="1">
                         </div>
 
                         <!-- Brightness & Contrast (new) -->
                         <div class="control-row">
-                            <label class="slider-label">
+                            <div class="slider-label">
                                 Brightness <span id="brightnessValue">0</span>
                                 <button id="resetBrightnessBtn">
                                     <svg class="icon">
                                         <use href="#icon-reset"></use>
                                     </svg>
-                                </button></label>
+                                </button>
+                            </div>
                             <input type="range" id="brightness" min="-100" max="100" value="0" step="1">
                         </div>
                         <div class="control-row">
-                            <label class="slider-label">
+                            <div class="slider-label">
                                 Contrast <span id="contrastValue">100</span>%
                                 <button id="resetContrastBtn">
                                     <svg class="icon">
                                         <use href="#icon-reset"></use>
                                     </svg>
-                                </button></label>
+                                </button>
+                            </div>
                             <input type="range" id="contrast" min="0" max="200" value="100" step="1">
                         </div>
 
@@ -150,10 +153,10 @@
                         <!-- Custom palette upload -->
                         <div id="paletteUploadContainer" style="display: none;" class="palette-upload-container">
                             <label class="dropzone">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
                                 </svg>
-                                <p>Upload Custom Pattern</p>
+                                <p>Upload Custom Palette</p>
                                 <input type="file" id="paletteUpload" accept="image/*">
                             </label>
                             <!-- <label>Custom palette image</label>
@@ -190,7 +193,7 @@
                         </div>
 
                         <!-- اضافه کردن بخش ادیتور پیشرفته (بسته شده به صورت پیش‌فرض) -->
-                        <details class="pattern-editor-details" open>
+                        <details class="pattern-editor-details">
                             <summary>
                                 <svg class="icon">
                                     <use href="#icon-edit"></use>
@@ -210,7 +213,7 @@
                             Custom Pattern
                         </h3>
                         <label class="dropzone">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
                             </svg>
                             <p>Upload Custom Pattern</p>
@@ -246,6 +249,11 @@
                     <div id="errorMessage" class="error hidden"></div>
                     <canvas id="previewCanvas" class="preview-canvas"></canvas>
                     <div class="stats" id="stats"></div>
+                    <button id="togglePreviewScaleBtn" class="btn secondary">
+                        <svg class="icon">
+                            <use href="#icon-maximize"></use>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
@@ -307,6 +315,14 @@
 
             <symbol id="icon-loading" viewBox="0 0 24 24">
                 <path d="M12 3V6M12 18V21M6 12H3M21 12H18M5.63672 5.63672L7.75977 7.75977M16.2422 16.2422L18.3633 18.3633M18.3652 5.63477L16.2441 7.75586M7.75781 16.2422L5.63477 18.3652" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            </symbol>
+
+            <symbol id="icon-maximize" viewBox="0 0 24 24">
+                <path d="M14 10L20 4M20 4H15.5M20 4V8.5M4 4L10 10M4 4V8.5M4 4H8.5M14 14L20 20M20 20V15.5M20 20H15.5M10 14L4 20M4 20H8.5M4 20L4 15.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            </symbol>
+
+            <symbol id="icon-minimize" viewBox="0 0 24 24">
+                <path d="M14 10L20 4M14 10H18.5M14 10V5.5M4 4L10 10M10 10V5.5M10 10H5.5M14 14L20 20M14 14V18.5M14 14H18.5M10 14L4 20M10 14H5.5M10 14V18.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
             </symbol>
         </svg>
     </body>
