@@ -954,7 +954,7 @@ async function buildPatternGrid() {
 /* -------------------------------
    DITHERING CORE
 --------------------------------- */
-function ditherImage(imgData, patternData, pW, pH, steps, mode, invert) {
+function ditherImage(imgData, patternData, pW, pH, steps, mode, invert, pixelSize) {
     const w = imgData.width;
     const h = imgData.height;
     const output = new ImageData(w, h);
@@ -967,9 +967,23 @@ function ditherImage(imgData, patternData, pW, pH, steps, mode, invert) {
 
     for (let y = 0; y < h; y++) {
         for (let x = 0; x < w; x++) {
-            const srcIdx = (y * w + x) * 4;
-            const patX = x % pW;
-            const patY = y % pH;
+            const dstIdx = (y * w + x) * 4;
+
+            // تعیین مختصات نمونه‌برداری از تصویر اصلی (مرکز بلوک)
+            const srcX = Math.floor(x / pixelSize) * pixelSize + Math.floor(pixelSize / 2);
+            const srcY = Math.floor(y / pixelSize) * pixelSize + Math.floor(pixelSize / 2);
+
+            // محدود کردن به محدوده تصویر
+            const safeX = Math.min(w - 1, Math.max(0, srcX));
+            const safeY = Math.min(h - 1, Math.max(0, srcY));
+
+            const srcIdx = (safeY * w + safeX) * 4;
+
+            // محاسبه مختصات پترن بر اساس موقعیت بلوک
+            const blockX = Math.floor(x / pixelSize);
+            const blockY = Math.floor(y / pixelSize);
+            const patX = blockX % pW;
+            const patY = blockY % pH;
             const patIdx = (patY * pW + patX) * 4;
             const threshold = pat[patIdx];
 
@@ -987,8 +1001,8 @@ function ditherImage(imgData, patternData, pW, pH, steps, mode, invert) {
                     outVal = Math.min(255, Math.round(q * interval));
                 }
                 if (invert) outVal = 255 - outVal;
-                dst[srcIdx] = dst[srcIdx + 1] = dst[srcIdx + 2] = outVal;
-                dst[srcIdx + 3] = 255;
+                dst[dstIdx] = dst[dstIdx + 1] = dst[dstIdx + 2] = outVal;
+                dst[dstIdx + 3] = 255;
             } else {
                 for (let c = 0; c < 3; c++) {
                     let val = src[srcIdx + c];
@@ -1000,9 +1014,9 @@ function ditherImage(imgData, patternData, pW, pH, steps, mode, invert) {
                         outVal = Math.min(255, Math.round(q * interval));
                     }
                     if (invert) outVal = 255 - outVal;
-                    dst[srcIdx + c] = outVal;
+                    dst[dstIdx + c] = outVal;
                 }
-                dst[srcIdx + 3] = 255;
+                dst[dstIdx + 3] = 255;
             }
         }
     }
@@ -1021,60 +1035,52 @@ async function processImage() {
     const W = state.originalWidth;
     const H = state.originalHeight;
 
-    // 1. Downsample to grid size
-    const gridW = Math.ceil(W / pixelSize);
-    const gridH = Math.ceil(H / pixelSize);
-    const gridCanvas = document.createElement('canvas');
-    gridCanvas.width = gridW;
-    gridCanvas.height = gridH;
-    const gridCtx = gridCanvas.getContext('2d');
-    gridCtx.imageSmoothingEnabled = true;
-    gridCtx.drawImage(state.originalImage, 0, 0, gridW, gridH);
-    let gridImgData = gridCtx.getImageData(0, 0, gridW, gridH);
+    // 1. ایجاد کانواس موقت برای اعمال brightness/contrast
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = W;
+    tempCanvas.height = H;
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCtx.drawImage(state.originalImage, 0, 0, W, H);
 
-    // 2. Apply brightness & contrast
+    let tempImgData = tempCtx.getImageData(0, 0, W, H);
+
+    // 2. اعمال brightness/contrast اگر لازم باشه
     if (brightness !== 0 || contrast !== 100) {
-        gridImgData = applyBrightnessContrast(gridImgData, brightness, contrast);
+        tempImgData = applyBrightnessContrast(tempImgData, brightness, contrast);
+        tempCtx.putImageData(tempImgData, 0, 0);
     }
 
-    // 3. Dither with selected mode (BW or RGB)
-    const ditheredGrid = ditherImage(
-        gridImgData,
+    // 3. اعمال dithering با پاس دادن pixelSize
+    const ditheredData = ditherImage(
+        tempImgData,
         state.patternImageData,
         state.patternWidth,
         state.patternHeight,
         steps,
         mode,
-        invert
+        invert,
+        pixelSize  // پارامتر جدید
     );
 
-    let finalGridData = ditheredGrid;
-
-    // 4. Apply palette if enabled
-    if (state.paletteEnabled && state.paletteColors && state.paletteColors.length > 0) {
-        finalGridData = applyPaletteToDitheredImage(
-            ditheredGrid,
-            state.paletteColors,
-            mode
-        );
-    }
-
-    gridCtx.putImageData(finalGridData, 0, 0);
-
-    // 5. Upscale to original size (nearest neighbor)
+    // 4. ایجاد خروجی نهایی
     const outputCanvas = document.createElement('canvas');
     outputCanvas.width = W;
     outputCanvas.height = H;
     const outCtx = outputCanvas.getContext('2d');
-    outCtx.imageSmoothingEnabled = false;
-    outCtx.drawImage(gridCanvas, 0, 0, gridW, gridH, 0, 0, W, H);
+    outCtx.putImageData(ditheredData, 0, 0);
+
+    // 5. اعمال پالت اگر فعال باشه
+    if (state.paletteEnabled && state.paletteColors && state.paletteColors.length > 0) {
+        const finalData = applyPaletteToDitheredImage(ditheredData, state.paletteColors, mode);
+        outCtx.putImageData(finalData, 0, 0);
+    }
 
     state.processedCanvas = outputCanvas;
 
-    // 6. Render preview
+    // 6. رندر preview
     renderPreview();
 
-    // 7. Update stats
+    // 7. آپدیت آمار
     let statsText = `Output: ${W}×${H} · Pixel Size: ${pixelSize} · Steps: ${steps} · Mode: ${mode}`;
     if (state.paletteEnabled && state.paletteName) {
         statsText += ` · Palette: ${state.paletteName}`;
@@ -1437,7 +1443,7 @@ function bindEvents() {
 
     elements.togglePreviewScaleBtn.addEventListener('click', (e) => {
         const buttonIcon = document.querySelector('#togglePreviewScaleBtn .icon use');
-        const isMaximized =  previewCanvas.classList.toggle('maximize');
+        const isMaximized = previewCanvas.classList.toggle('maximize');
         console.log(isMaximized, buttonIcon);
         if (isMaximized) {
             buttonIcon.setAttribute('href', '#icon-minimize');
