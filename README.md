@@ -56,7 +56,7 @@ You can use the [**Dithering Studio** editor online](https://yasinc2.github.io/d
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/dithering-studio.git
+git clone https://github.com/YasinC2/dithering-studio.git
 cd dithering-studio
 ```
 
